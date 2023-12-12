@@ -22,16 +22,7 @@ export default function Home() {
       </div>
 
       <section id='about_me' className={classes.about_me}>
-        <div className={classes.image_wrapper}>
-          <Image
-            src='/images/profile_1.jpg'
-            alt='giorgos_eftychiou_profile_1'
-            fill
-            placeholder='blur'
-            blurDataURL={'/images/profile_1.jpg'}
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-          />
-        </div>
+        <div className={classes.clip}></div>
         <div>
           <div className={classes.heading}>
             <h1>About Me</h1>
@@ -59,37 +50,47 @@ export default function Home() {
         </div>
       </section>
 
-      <section id='resume'>
-        <h1>Resume</h1>
+      <section id='resume' className={classes.resume}>
+        <div className={classes.clip}></div>
         <div>
-          <h2>CyposSystems</h2>
-          <p>Software Developer</p>
-          <p>2019 - 2022</p>
-        </div>
-        <div>
-          <h2>Amdocs</h2>
-          <p>Software Developer</p>
-          <p>2022 - Present</p>
+          <div className={classes.heading}>
+            <h1>Resume</h1>
+          </div>
+          <div>
+            <h2>CyposSystems</h2>
+            <p>Software Developer</p>
+            <p>2019 - 2022</p>
+          </div>
+          <div>
+            <h2>Amdocs</h2>
+            <p>Software Developer</p>
+            <p>2022 - Present</p>
+          </div>
         </div>
       </section>
 
-      <section id='skills'>
-        <h1>Skills</h1>
+      <section id='skills' className={classes.skills}>
+        <div className={classes.clip}></div>
         <div>
-          <h2>Frontend</h2>
-          <ul>
-            <li>JavaScript: 95%</li>
-            <li>React: 95%</li>
-            <li>CSS: 95%</li>
-            <li>Android Studio: 20%</li>
-          </ul>
-        </div>
-        <div>
-          <h2>Backend</h2>
-          <ul>
-            <li>Node.js: 70%</li>
-            <li>Java Spring: 25%</li>
-          </ul>
+          <div className={classes.heading}>
+            <h1>Skills</h1>
+          </div>
+          <div>
+            <h2>Frontend</h2>
+            <ul>
+              <li>JavaScript: 95%</li>
+              <li>React: 95%</li>
+              <li>CSS: 95%</li>
+              <li>Android Studio: 20%</li>
+            </ul>
+          </div>
+          <div>
+            <h2>Backend</h2>
+            <ul>
+              <li>Node.js: 70%</li>
+              <li>Java Spring: 25%</li>
+            </ul>
+          </div>
         </div>
       </section>
     </div>
