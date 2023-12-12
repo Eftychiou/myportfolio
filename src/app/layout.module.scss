@@ -6,15 +6,17 @@
   flex-direction: column;
 
   header {
-    background-color: #242125;
+    background-color: var(--theme-color-main);
     height: 100px;
   }
 
-  // main {
-  // }
+  main {
+    border-left: 0.8rem solid var(--theme-color-main);
+    border-right: 0.8rem solid var(--theme-color-main);
+  }
 
   footer {
-    background-color: #242125;
+    background-color: var(--theme-color-main);
     color: #f8f9f9;
     margin-top: auto;
     padding-inline: 6rem;
