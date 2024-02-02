@@ -2,14 +2,31 @@
   height: 100%;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   font-size: 1.3rem;
   padding-inline: 6rem;
   .link {
-    color: #dce1e1;
+    color: #fffefc;
+    font-weight: 700;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    &:hover {
+      color: #212325;
+      .image {
+        filter: invert(0%);
+      }
+    }
+    .image {
+      filter: invert(100%);
+    }
     cursor: pointer;
     &.active {
-      color: pink;
+      color: #212325;
+      font-weight: 900;
+      .image {
+        filter: invert(0%);
+      }
     }
   }
 }

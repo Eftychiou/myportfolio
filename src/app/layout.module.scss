@@ -1,5 +1,6 @@
 .body {
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, #ddf1ff, #b9dcf7);
+
   min-height: 100vh;
 
   display: flex;
@@ -11,8 +12,8 @@
   }
 
   main {
-    border-left: 0.8rem solid var(--theme-color-main);
-    border-right: 0.8rem solid var(--theme-color-main);
+    // border-left: 0.8rem solid var(--theme-color-main);
+    // border-right: 0.8rem solid var(--theme-color-main);
   }
 
   footer {
@@ -21,6 +22,7 @@
     margin-top: auto;
     padding-inline: 6rem;
     padding-block: 3rem;
+
     .links {
       display: flex;
       flex-direction: column;
