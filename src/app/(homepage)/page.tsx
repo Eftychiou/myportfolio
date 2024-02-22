@@ -14,176 +14,191 @@ import {
 } from 'recharts';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { COLORS, RADIAN, data, renderCustomizedLabel, languagesList } from './data';
+import { setup } from './canvas';
+import React from 'react';
+import Link from 'next/link';
+
+// eslint-disable-next-line react/display-name
+const ChildComponent = React.memo((props: { setLanguages: any }) => {
+  return (
+    <div className={[classes.first_chart, classes.chart].join(' ')}>
+      <div className={classes.inner}>
+        <ResponsiveContainer width='100%' height='100%'>
+          <PieChart
+            onMouseLeave={() => {
+              props.setLanguages(languagesList);
+            }}
+          >
+            <Pie
+              cursor='pointer'
+              data={data}
+              cx='50%'
+              cy='50%'
+              labelLine={false}
+              label={(a: any) => renderCustomizedLabel(a, props.setLanguages, languagesList)}
+              outerRadius={100}
+              fill='#8884d8'
+              dataKey='value'
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  style={{ outline: 'none' }}
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                  onClick={() => {
+                    if (index === 0) {
+                      props.setLanguages(languagesList.filter((l) => l.type === 'frontend'));
+                    } else if (index === 1) {
+                      props.setLanguages(languagesList.filter((l) => l.type === 'backend'));
+                    }
+                  }}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+});
 
 export default function Home() {
   const [skillsIsShow, setSkillsIsShown] = useState(false);
-  const data = [
-    { name: 'FRONTEND', value: 100 },
-    { name: 'BACKEND', value: 68 }
-  ];
+  const [languageActiveLabel, setLanguageActiveLabel] = useState('');
 
-  const COLORS = ['#34B4FF', '#CB247C'];
+  const [languages, setLanguages] = useState(languagesList);
 
-  const RADIAN = Math.PI / 180;
+  const leftEyeRef = useRef<HTMLDivElement>(null);
+  const rightEyeRef = useRef<HTMLDivElement>(null);
 
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: any) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  const skillsRef = useRef(null);
 
-    return (
-      <>
-        <text x={x} y={y} fill='white' textAnchor={x > cx ? 'start' : 'end'} dominantBaseline='central'>
-          {`${(percent * 100).toFixed(0)}%`}
-        </text>
-        <text
-          x={360}
-          y={y}
-          fill={data[index].name === 'FRONTEND' ? '#34B4FF' : '#CB247C'}
-          textAnchor={'start'}
-          dominantBaseline='central'
-        >
-          {`${data[index].name}`}
-        </text>
-      </>
-    );
-  };
-  const [languages, setLanguages] = useState([
-    {
-      subject: 'Javascript',
-      value: 95
-    },
-    {
-      subject: 'NextJS',
-      value: 95
-    },
-    {
-      subject: 'React',
-      value: 95
-    },
-    {
-      subject: 'CSS',
-      value: 95
-    },
-    {
-      subject: 'NodeJS',
-      value: 80
-    },
-    {
-      subject: 'MongoDB',
-      value: 70
-    },
-    {
-      subject: 'SQL',
-      value: 50
-    },
-    {
-      subject: 'Java',
-      value: 50
-    },
-    {
-      subject: 'Andoid Java',
-      value: 20
-    },
-    {
-      subject: 'NGINX',
-      value: 50
-    },
-
-    {
-      subject: 'Docker',
-      value: 75
+  useEffect(() => {
+    if (window && document) {
+      setup(window);
     }
-  ]);
-
-  const targetRef = useRef(null);
+  }, []);
 
   const handleIntersection = (entries: any) => {
     entries.forEach((entry: any) => {
       if (entry.isIntersecting) {
-        // Element is now in the viewport
-        console.log('Element is in the viewport');
-        // Call your function here
-        yourFunction();
+        setSkillsIsShown(true);
       }
     });
   };
 
   useEffect(() => {
+    document.addEventListener('mousemove', function (event) {
+      // Get the horizontal position of the mouse
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
+
+      // Get the width of the screen
+      const screenWidth = window.innerWidth;
+      const screenHeigh = window.innerHeight;
+
+      const leftEye = leftEyeRef.current;
+      const rightEye = rightEyeRef.current;
+
+      if (mouseY < screenHeigh / 5) {
+        leftEye?.classList.remove(classes.isBottom);
+        rightEye?.classList.remove(classes.isBottom);
+      } else {
+        leftEye?.classList.add(classes.isBottom);
+        rightEye?.classList.add(classes.isBottom);
+      }
+      // Determine if the mouse is on the left half or the right half
+      if (mouseX < screenWidth / 1.15) {
+        leftEye?.classList.remove(classes.isRight);
+        rightEye?.classList.remove(classes.isRight);
+      } else {
+        leftEye?.classList.add(classes.isRight);
+        rightEye?.classList.add(classes.isRight);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     const options = {
-      root: null, // use the viewport as the root
-      rootMargin: '0px', // no margin
-      threshold: 0.5 // trigger when 50% of the element is visible
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5
     };
 
     const observer = new IntersectionObserver(handleIntersection, options);
 
-    if (targetRef.current) {
-      observer.observe(targetRef.current);
+    if (skillsRef.current) {
+      observer.observe(skillsRef.current);
     }
 
-    // Cleanup observer on component unmount
     return () => {
-      if (targetRef.current) {
-        observer.unobserve(targetRef.current);
+      if (skillsRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        observer.unobserve(skillsRef.current);
       }
     };
-  }, []); // Run effect only once on mount
+  }, []);
 
-  const yourFunction = () => {
-    // Your function logic goes here
-    setSkillsIsShown(true);
+  const downloadFile = () => {
+    // Create a Blob with the file content
+    const blob = new Blob([''], { type: 'application/pdf' });
+    const url = '/cv.pdf';
+
+    // Create a temporary <a> element to initiate the download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'cv.pdf';
+
+    // Append the <a> element to the document body
+    document.body.appendChild(a);
+
+    // Initiate the download
+    a.click();
+
+    // Cleanup
+    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   };
 
   return (
     <div className={classes.page}>
-      <div className={classes.hero} id='hero'>
-        {/* <Image src='/images/hero.jpg' fill /> */}
-        <div
-          className={classes.image_cover}
-          style={{
-            background: `url('${'http://localhost:3000/images/hero.jpg'}') no-repeat center`
-          }}
-        >
-          <div className={classes.content}>
-            <h1>Hello I am Giorgos</h1>
-            <br />
-            <p>Welcome</p>
-          </div>
-        </div>
-      </div>
-
+      <canvas id='world' width='383' height='898'></canvas>
       <section id='about_me' className={classes.about_me}>
-        {/* <div className={classes.clip}></div> */}
-        <div className={classes.title}>
-          About Me
-          <div />
-        </div>
-        <div className={classes.image}>
-          <Image src='/images/aboutme.png' alt='something' fill />
-        </div>
+        <div className={classes.filler}></div>
+        <span className={classes.clip}>
+          <div className={classes.clip_image}></div>
+        </span>
 
-        <div className={classes.secondary_title}>FULL STACK DEVELOPER</div>
-        <div className={classes.secondary_title}>Since 2019</div>
-        <div className={classes.description}>
-          <p>
-            In 2019, I embarked on a transformative journey into the dynamic realm of web development. Fueled by a
-            passion for crafting immersive digital experiences, my expertise revolves around harnessing the power of
-            React, JavaScript, CSS, and Node.js. I thrive on the intricate dance of code, consistently pushing
-            boundaries and elevating user interfaces to new heights.
-          </p>
+        <div className={classes.description_container}>
+          <div className={classes.header_title}>
+            <p>FULL STACK DEVELOPER</p>
+          </div>
+          <div className={classes.description}>
+            <div className={classes.image}>
+              <Image src='/images/aboutme.png' alt='something' width={100} height={100} />
+              <div id='lid' className={classes.eye}>
+                <div ref={leftEyeRef}></div>
+              </div>
+              <div id='lid' className={classes.eye_2}>
+                <div ref={rightEyeRef}></div>
+              </div>
+              <div onClick={() => downloadFile()} className={`${classes.cloud} ${classes.grow} ${classes.left}`}>
+                Download CV
+              </div>
+            </div>
 
-          <p>
-            Beyond the web, I delve into the expansive world of Java, seamlessly weaving through Android and Spring
-            frameworks to bring my ideas to life. My journey extends beyond mere technical mastery; its a canvas where
-            creativity meets functionality.
-          </p>
-
-          <p>
-            As I navigate this ever-evolving landscape, I am not just a developer; I am a creator weaving lines of code
-            into digital tapestries. Join me on this exciting venture, where innovation meets expression, and each
-            project is a testament to my commitment to excellence.
-          </p>
+            <p>
+              Having worked extensively with backend and frontend applications coupled with my professional
+              certifications. I have gained exposure, and established various technical skills relating to web
+              developing, Object Oriented Programming and Database Management. A proactive, self-motivated individual,
+              with strong learning enthusiasm. I relish the opportunity to work as part of a team, enjoying the
+              challenge of taking on new roles and responsibilities in dynamic working environments. I am now looking to
+              further my professional experience by seeking employment in a company that allows me to progress in the
+              coding world.
+            </p>
+          </div>
+          <div className={classes.footer_title}>Since 2019</div>
         </div>
       </section>
 
@@ -193,9 +208,8 @@ export default function Home() {
           <div />
         </div>
         <div className={classes.image}>
-          <Image src='/images/company.png' alt='something' width={200} height={200} />
+          <Image src='/images/react.png' alt='something' width={200} height={200} />
         </div>
-
         <div className={[classes.description, classes.cypos].join(' ')}>
           <Image src='/images/cypos.png' alt='something' width={100} height={100} className={classes.image} />
           <h2>CyposSystems</h2>
@@ -208,7 +222,6 @@ export default function Home() {
           <p>Collaborated with cross-functional teams to deliver high-quality software products.</p>
           <p>Participated in code reviews to maintain code quality and adherence to best practices.</p>
         </div>
-
         <div className={[classes.description, classes.amdocs].join(' ')}>
           <Image src='/images/amdocs.png' alt='something' width={70} height={70} className={classes.image} />
           <h2>Amdocs</h2>
@@ -222,7 +235,8 @@ export default function Home() {
           <p>Staying updated with industry trends and incorporating best practices into development processes.</p>
         </div>
       </section>
-      <section id='skills' className={classes.skills} ref={targetRef}>
+
+      <section id='skills' className={classes.skills} ref={skillsRef}>
         <div className={classes.image}>
           <Image src='/images/programming-languages.png' alt='something' width={200} height={200} />
         </div>
@@ -232,131 +246,115 @@ export default function Home() {
         </div>
         <div className={classes.description}>
           <ul>
-            <li>
-              <strong>HTML5 & CSS3:</strong> Proficient in creating semantic and well-structured HTML documents, coupled
-              with advanced CSS for styling and layout.
+            <li className={languageActiveLabel === 'Javascript' ? classes.active : classes.inactive}>
+              <strong>Javascript:</strong> Used extensively for frontend and backend development, including building
+              interactive user interfaces and server-side scripting.
             </li>
-            <li>
-              <strong>JavaScript (ES6+):</strong> Strong command over modern JavaScript, including ES6+ features, for
-              building interactive and dynamic user interfaces.
+            <li className={languageActiveLabel === 'NextJS' ? classes.active : classes.inactive}>
+              <strong>NextJS:</strong> Leveraged for building server-rendered React applications with ease of use and
+              enhanced performance.
             </li>
-            <li>
-              <strong>Responsive Design:</strong> Skilled in designing and implementing responsive layouts that
-              seamlessly adapt to various devices and screen sizes.
+            <li className={languageActiveLabel === 'React' ? classes.active : classes.inactive}>
+              <strong>React:</strong> Employed for building reusable UI components and developing single-page
+              applications with efficient state management.
             </li>
-            <li>
-              <strong>HTML5 & CSS3:</strong> Proficient in creating semantic and well-structured HTML documents, coupled
-              with advanced CSS for styling and layout.
+            <li className={languageActiveLabel === 'CSS' ? classes.active : classes.inactive}>
+              <strong>CSS:</strong> Utilized for styling web applications and ensuring a visually appealing user
+              experience across different devices and screen sizes.
             </li>
-            <li>
-              <strong>JavaScript (ES6+):</strong> Strong command over modern JavaScript, including ES6+ features, for
-              building interactive and dynamic user interfaces.
+            <li className={languageActiveLabel === 'NodeJS' ? classes.active : classes.inactive}>
+              <strong>NodeJS:</strong> Used for building scalable and high-performance server-side applications, RESTful
+              APIs, and real-time applications.
             </li>
-            <li>
-              <strong>Responsive Design:</strong> Skilled in designing and implementing responsive layouts that
-              seamlessly adapt to various devices and screen sizes.
+            <li className={languageActiveLabel === 'MongoDB' ? classes.active : classes.inactive}>
+              <strong>MongoDB:</strong> Employed as a NoSQL database solution for storing and managing unstructured data
+              in web applications.
+            </li>
+            <li className={languageActiveLabel === 'SQL' ? classes.active : classes.inactive}>
+              <strong>SQL:</strong> Utilized for querying and managing relational databases, ensuring data integrity and
+              efficient data retrieval.
+            </li>
+            <li className={languageActiveLabel === 'Java' ? classes.active : classes.inactive}>
+              <strong>Java:</strong> Employed for building scalable backend systems, Android mobile applications, and
+              enterprise-level software solutions.
+            </li>
+            <li className={languageActiveLabel === 'Andoid Java' ? classes.active : classes.inactive}>
+              <strong>Android Java:</strong> Utilized for developing native Android applications, leveraging the Android
+              SDK and platform-specific APIs.
+            </li>
+            <li className={languageActiveLabel === 'NGINX' ? classes.active : classes.inactive}>
+              <strong>NGINX:</strong> Employed as a reverse proxy server and load balancer for optimizing web server
+              performance and managing incoming traffic.
+            </li>
+            <li className={languageActiveLabel === 'Docker' ? classes.active : classes.inactive}>
+              <strong>Docker:</strong> Utilized for containerizing applications and deploying them in isolated
+              environments, ensuring consistency across different development and production environments.
             </li>
           </ul>
         </div>
+        {skillsIsShow && <ChildComponent setLanguages={setLanguages} />}
 
-        {skillsIsShow && (
-          <div className={[classes.first_chart, classes.chart].join(' ')}>
-            <div className={classes.inner}>
-              <ResponsiveContainer width='100%' height='100%'>
-                <PieChart>
-                  <Pie
-                    cursor='pointer'
-                    data={data}
-                    cx='50%'
-                    cy='50%'
-                    labelLine={false}
-                    label={renderCustomizedLabel}
-                    outerRadius={100}
-                    fill='#8884d8'
-                    dataKey='value'
-                  >
-                    {data.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                        onClick={() => {
-                          if (index === 0) {
-                            setLanguages([
-                              {
-                                subject: 'Javascript',
-                                value: 95
-                              },
-                              {
-                                subject: 'NextJS',
-                                value: 95
-                              },
-                              {
-                                subject: 'React',
-                                value: 95
-                              },
-                              {
-                                subject: 'CSS',
-                                value: 95
-                              }
-                            ]);
-                          } else if (index === 1) {
-                            setLanguages([
-                              {
-                                subject: 'NodeJS',
-                                value: 80
-                              },
-                              {
-                                subject: 'MongoDB',
-                                value: 70
-                              },
-                              {
-                                subject: 'SQL',
-                                value: 50
-                              },
-                              {
-                                subject: 'Java',
-                                value: 50
-                              },
-                              {
-                                subject: 'Andoid Java',
-                                value: 20
-                              },
-                              {
-                                subject: 'NGINX',
-                                value: 50
-                              },
-
-                              {
-                                subject: 'Docker',
-                                value: 75
-                              }
-                            ]);
-                          }
-                        }}
-                      />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        )}
         {skillsIsShow && (
           <div className={[classes.second_chart, classes.chart].join(' ')}>
             <div className={classes.inner}>
               <div className={classes.chart_container}>
                 <ResponsiveContainer width='100%' height='100%'>
-                  <RadarChart cx='50%' cy='50%' outerRadius='70%' data={languages}>
+                  <RadarChart
+                    style={{ cursor: 'pointer' }}
+                    cx='50%'
+                    cy='50%'
+                    outerRadius='70%'
+                    data={languages}
+                    onClick={(a) => {
+                      setLanguageActiveLabel(a.activeLabel as string);
+                      console.log(a.activeLabel);
+                    }}
+                  >
                     <PolarGrid />
-                    <PolarAngleAxis dataKey='subject' />
+                    <PolarAngleAxis
+                      // stroke='#B0A1FE'
+                      onMouseEnter={(a) => {
+                        setLanguageActiveLabel(a.value);
+                      }}
+                      dataKey='subject'
+                      onClick={(a) => {
+                        setLanguageActiveLabel(a.value);
+                      }}
+                    />
+
                     {/* <PolarRadiusAxis /> */}
-                    <Radar dataKey='value' stroke='#34B4FF' fill='#34B4FF' fillOpacity={0.6} />
+                    <Radar
+                      dataKey='value'
+                      stroke={languages.length === 7 ? '#CB247C' : '#34B4FF'}
+                      fill={languages.length === 7 ? '#CB247C' : '#34B4FF'}
+                      fillOpacity={0.6}
+                    />
                   </RadarChart>
                 </ResponsiveContainer>
               </div>
             </div>
           </div>
         )}
+      </section>
+      <section id='contact' className={classes.contact}>
+        <div className={classes.links}>
+          <div className={classes.link}>
+            <Link href='mailto:eftichiou@hotmail.com' target='_blank'>
+              <Image src='/images/email.png' alt='something' width={70} height={70} />
+            </Link>
+          </div>
+          <div className={classes.link}>
+            <Link href='https://www.linkedin.com/in/george-eftichiou-8b1a11100/' target='_blank'>
+              <Image src='/images/linkedin.png' alt='something' width={70} height={70} />
+            </Link>
+          </div>
+
+          <div className={classes.link}>
+            <Link href='https://www.facebook.com/profile.php?id=100011412591865' target='_blank'>
+              <Image src='/images/facebook.png' alt='something' width={70} height={70} />
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );

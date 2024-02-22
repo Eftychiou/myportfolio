@@ -1,32 +1,27 @@
 .body {
-  background: linear-gradient(to bottom, transparent, #ddf1ff, #b9dcf7);
-
+  // background: linear-gradient(to bottom, transparent, #ddf1ff, #b9dcf7);
+  background: #b9dcf7;
+  // background: linear-gradient(126deg, rgba(238, 174, 202, 1) 0%, rgba(129, 18, 240, 1) 0%, rgba(148, 187, 233, 1) 54%);
   min-height: 100vh;
 
   display: flex;
   flex-direction: column;
 
   header {
-    background-color: var(--theme-color-main);
-    height: 100px;
+    // background-color: var(--theme-color-main);
+    // background: linear-gradient(126deg, #b0a1fe, rgba(148, 187, 233, 1) 54%);
+    background: #b0a1fe;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    // filter: drop-shadow(10px 10px 5px #888888);
   }
 
-  main {
-    // border-left: 0.8rem solid var(--theme-color-main);
-    // border-right: 0.8rem solid var(--theme-color-main);
-  }
-
-  footer {
-    background-color: var(--theme-color-main);
-    color: #f8f9f9;
-    margin-top: auto;
-    padding-inline: 6rem;
-    padding-block: 3rem;
-
-    .links {
-      display: flex;
-      flex-direction: column;
-      font-size: 1.5rem;
-    }
-  }
+  // main {
+  //   border-left: 0.8rem solid var(--theme-color-main);
+  //   border-right: 0.8rem solid var(--theme-color-main);
+  // }
 }

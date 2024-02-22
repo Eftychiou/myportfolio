@@ -3,8 +3,33 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   padding-inline: 6rem;
+
+  .home {
+    margin-top: 0rem;
+    animation: moveShadowCircular 5s linear infinite;
+
+    @keyframes moveShadowCircular {
+      0% {
+        filter: drop-shadow(10px 10px 5px #888888);
+      }
+      50% {
+        filter: drop-shadow(50px 10px 25px #888888);
+      }
+      100% {
+        filter: drop-shadow(10px 10px 5px #888888);
+      }
+    }
+    &:hover {
+      color: #212325;
+      .image {
+        transition: all 0.3s;
+        scale: 1.1;
+      }
+    }
+  }
+
   .link {
     color: #fffefc;
     font-weight: 700;

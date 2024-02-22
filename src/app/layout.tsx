@@ -20,22 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
         </header>
         <main>{children}</main>
-        <footer>
-          <h1>Contact</h1>
-          <div className={classes.links}>
-            <p>Telephone: +35796452718</p>
-            <p>Location: Cyprus, Limassol</p>
-            <Link href='mailto:eftichiou@hotmail.com' target='_blank'>
-              eftichiou@hotmail.com
-            </Link>
-            <Link href='https://www.linkedin.com/in/george-eftichiou-8b1a11100/' target='_blank'>
-              LinkedIn
-            </Link>
-            <Link href='https://www.facebook.com/profile.php?id=100011412591865' target='_blank'>
-              Facebook
-            </Link>
-          </div>
-        </footer>
       </body>
     </html>
   );
