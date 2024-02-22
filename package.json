@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pm2:start": "pm2 start npm --name Portfolio -- start"
   },
   "dependencies": {
     "echarts": "^5.4.3",
