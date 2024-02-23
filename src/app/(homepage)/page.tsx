@@ -1,17 +1,17 @@
 'use client';
 
 import classes from './home.module.scss';
-// import {
-//   PieChart,
-//   Pie,
-//   Cell,
-//   ResponsiveContainer,
-//   Radar,
-//   RadarChart,
-//   PolarGrid,
-//   PolarAngleAxis,
-//   PolarRadiusAxis
-// } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis
+} from 'recharts';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { COLORS, RADIAN, data, renderCustomizedLabel, languagesList } from './data';
@@ -20,48 +20,48 @@ import React from 'react';
 import Link from 'next/link';
 
 // eslint-disable-next-line react/display-name
-// const ChildComponent = React.memo((props: { setLanguages: any }) => {
-//   return (
-//     <div className={[classes.first_chart, classes.chart].join(' ')}>
-//       <div className={classes.inner}>
-//         <ResponsiveContainer width='100%' height='100%'>
-//           <PieChart
-//             onMouseLeave={() => {
-//               props.setLanguages(languagesList);
-//             }}
-//           >
-//             <Pie
-//               cursor='pointer'
-//               data={data}
-//               cx='50%'
-//               cy='50%'
-//               labelLine={false}
-//               label={(a: any) => renderCustomizedLabel(a, props.setLanguages, languagesList)}
-//               outerRadius={100}
-//               fill='#8884d8'
-//               dataKey='value'
-//             >
-//               {data.map((entry, index) => (
-//                 <Cell
-//                   style={{ outline: 'none' }}
-//                   key={`cell-${index}`}
-//                   fill={COLORS[index % COLORS.length]}
-//                   onClick={() => {
-//                     if (index === 0) {
-//                       props.setLanguages(languagesList.filter((l) => l.type === 'frontend'));
-//                     } else if (index === 1) {
-//                       props.setLanguages(languagesList.filter((l) => l.type === 'backend'));
-//                     }
-//                   }}
-//                 />
-//               ))}
-//             </Pie>
-//           </PieChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </div>
-//   );
-// });
+const ChildComponent = React.memo((props: { setLanguages: any }) => {
+  return (
+    <div className={[classes.first_chart, classes.chart].join(' ')}>
+      <div className={classes.inner}>
+        <ResponsiveContainer width='100%' height='100%'>
+          <PieChart
+            onMouseLeave={() => {
+              props.setLanguages(languagesList);
+            }}
+          >
+            <Pie
+              cursor='pointer'
+              data={data}
+              cx='50%'
+              cy='50%'
+              labelLine={false}
+              label={(a: any) => renderCustomizedLabel(a, props.setLanguages, languagesList)}
+              outerRadius={100}
+              fill='#8884d8'
+              dataKey='value'
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  style={{ outline: 'none' }}
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                  onClick={() => {
+                    if (index === 0) {
+                      props.setLanguages(languagesList.filter((l) => l.type === 'frontend'));
+                    } else if (index === 1) {
+                      props.setLanguages(languagesList.filter((l) => l.type === 'backend'));
+                    }
+                  }}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+});
 
 export default function Home() {
   const [skillsIsShow, setSkillsIsShown] = useState(false);
@@ -75,9 +75,9 @@ export default function Home() {
   const skillsRef = useRef(null);
 
   useEffect(() => {
-    // if (window && document) {
-    //   setup(window);
-    // }
+    if (window && document) {
+      setup(window);
+    }
   }, []);
 
   const handleIntersection = (entries: any) => {
@@ -292,7 +292,7 @@ export default function Home() {
             </li>
           </ul>
         </div>
-        {/* {skillsIsShow && <ChildComponent setLanguages={setLanguages} />}
+        {skillsIsShow && <ChildComponent setLanguages={setLanguages} />}
 
         {skillsIsShow && (
           <div className={[classes.second_chart, classes.chart].join(' ')}>
@@ -322,7 +322,7 @@ export default function Home() {
                       }}
                     />
 
-                    {/* <PolarRadiusAxis /> 
+                    {/* <PolarRadiusAxis /> */}
                     <Radar
                       dataKey='value'
                       stroke={languages.length === 7 ? '#CB247C' : '#34B4FF'}
@@ -334,7 +334,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        )} */}
+        )}
       </section>
       <section id='contact' className={classes.contact}>
         <div className={classes.links}>
