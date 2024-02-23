@@ -93,7 +93,7 @@ export const Nav = () => {
   return (
     <nav className={classes.nav}>
       <Link className={classes.home} href='/'>
-        <Image src='/images/home.png' alt='home' width={40} height={40} className={classes.image} priority />
+        <Image src='/images/home.png' alt='home' width={40} height={40} className={classes.image} />
       </Link>
 
       {sections.map((s, idx) => (
@@ -111,7 +111,7 @@ export const Nav = () => {
             }
           }}
         >
-          <Image src={s.iconUrl} alt={s.name} width={25} height={25} className={classes.image} priority />
+          <Image src={s.iconUrl} alt={s.name} width={25} height={25} className={classes.image} />
           {s.name}
         </p>
       ))}
@@ -119,7 +119,7 @@ export const Nav = () => {
         const isActive = pathname?.startsWith(l.href);
         return (
           <Link className={isActive ? [classes.link, classes.active].join(' ') : classes.link} key={idx} href={l.href}>
-            <Image src={l.iconUrl} alt='something' width={25} height={25} className={classes.image} priority/>
+            <Image src={l.iconUrl} alt='something' width={25} height={25} className={classes.image} />
             {l.name}
           </Link>
         );

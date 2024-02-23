@@ -176,7 +176,7 @@ export default function Home() {
           </div>
           <div className={classes.description}>
             <div className={classes.image}>
-              <Image src='/images/aboutme.png' alt='aboutme' width={100} height={100} priority />
+              <Image src='/images/aboutme.png' alt='aboutme' width={100} height={100} />
               <div id='lid' className={classes.eye}>
                 <div ref={leftEyeRef}></div>
               </div>
@@ -208,10 +208,10 @@ export default function Home() {
           <div />
         </div>
         <div className={classes.image}>
-          <Image src='/images/react.png' alt='react' width={200} height={200} priority />
+          <Image src='/images/react.png' alt='react' width={200} height={200} />
         </div>
         <div className={[classes.description, classes.cypos].join(' ')}>
-          <Image src='/images/cypos.png' alt='cypos' width={100} height={100} className={classes.image} priority />
+          <Image src='/images/cypos.png' alt='cypos' width={100} height={100} className={classes.image} />
           <h2>CyposSystems</h2>
           <p>Software Developer</p>
           <p>2019 - 2022</p>
@@ -223,7 +223,7 @@ export default function Home() {
           <p>Participated in code reviews to maintain code quality and adherence to best practices.</p>
         </div>
         <div className={[classes.description, classes.amdocs].join(' ')}>
-          <Image src='/images/amdocs.png' alt='amdocs' width={70} height={70} className={classes.image} priority />
+          <Image src='/images/amdocs.png' alt='amdocs' width={70} height={70} className={classes.image} />
           <h2>Amdocs</h2>
           <p>Software Developer</p>
           <p>2022 - Present</p>
@@ -238,7 +238,7 @@ export default function Home() {
 
       <section id='skills' className={classes.skills} ref={skillsRef}>
         <div className={classes.image}>
-          <Image src='/images/programming-languages.png' alt='languages' width={200} height={200} priority />
+          <Image src='/images/programming-languages.png' alt='languages' width={200} height={200} />
         </div>
 
         <div className={classes.title}>
@@ -340,18 +340,18 @@ export default function Home() {
         <div className={classes.links}>
           <div className={classes.link}>
             <Link href='mailto:eftichiou@hotmail.com' target='_blank'>
-              <Image src='/images/email.png' alt='email' width={70} height={70} priority />
+              <Image src='/images/email.png' alt='email' width={70} height={70} />
             </Link>
           </div>
           <div className={classes.link}>
             <Link href='https://www.linkedin.com/in/george-eftichiou-8b1a11100/' target='_blank'>
-              <Image src='/images/linkedin.png' alt='linkedin' width={70} height={70} priority />
+              <Image src='/images/linkedin.png' alt='linkedin' width={70} height={70} />
             </Link>
           </div>
 
           <div className={classes.link}>
             <Link href='https://www.facebook.com/profile.php?id=100011412591865' target='_blank'>
-              <Image src='/images/facebook.png' alt='facebook' width={70} height={70} priority />
+              <Image src='/images/facebook.png' alt='facebook' width={70} height={70} />
             </Link>
           </div>
         </div>
