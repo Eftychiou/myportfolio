@@ -75,9 +75,9 @@ export default function Home() {
   const skillsRef = useRef(null);
 
   useEffect(() => {
-    if (window && document) {
-      setup(window);
-    }
+    // if (window && document) {
+    //   setup(window);
+    // }
   }, []);
 
   const handleIntersection = (entries: any) => {
