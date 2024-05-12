@@ -115,7 +115,7 @@ export const Nav = () => {
           {s.name}
         </p>
       ))}
-      {/* {links.map((l, idx) => {
+      {links.map((l, idx) => {
         const isActive = pathname?.startsWith(l.href);
         return (
           <Link className={isActive ? [classes.link, classes.active].join(' ') : classes.link} key={idx} href={l.href}>
@@ -123,7 +123,7 @@ export const Nav = () => {
             {l.name}
           </Link>
         );
-      })} */}
+      })}
     </nav>
   );
 };
