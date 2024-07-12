@@ -251,15 +251,22 @@ export const Scene = () => {
           position={[-15, 0.01, -10]}
           imageSrc='./images/cypos_image.png'
           userData={{ id: 'cypos' }}
-          link='https://eshop.geef.cc/'
+          link='https://www.cypossystems.com.cy/'
           label='Cypos'
         />
         <WebsiteStop
           position={[20, 0.01, -10]}
           imageSrc='./images/eshop_image.png'
           userData={{ id: 'eshop' }}
-          link='https://www.cypossystems.com.cy/'
+          link='https://eshop.geef.cc/'
           label='Eshop'
+        />
+        <WebsiteStop
+          position={[35, 0.01, -10]}
+          imageSrc='./images/take.png'
+          userData={{ id: 'eshop' }}
+          link='https://take.geef.cc/'
+          label='Take'
         />
       </Physics>
 

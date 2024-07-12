@@ -115,6 +115,9 @@ function Vehicle({
     } else if (x > 15 && x < 25 && z < -2 && z > -8) {
       camera.setLookAt(20, 4, -9.5, 20, 0.01, -10, true);
       return true;
+    } else if (x > 30 && z < -2 && z > -8) {
+      camera.setLookAt(35, 4, -9.5, 35, 0.01, -10, true);
+      return true;
     }
 
     return false;
