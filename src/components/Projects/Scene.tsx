@@ -1,278 +1,134 @@
-/* eslint-disable jsx-a11y/alt-text */
-import { CylinderArgs, Physics, PlaneProps, usePlane, useBox, BoxProps, useTrimesh } from '@react-three/cannon';
-
-import { Text3D, Text, Sky, Cloud } from '@react-three/drei';
-
-import { useRef, useState } from 'react';
+import { useTexture, MeshPortalMaterial, RoundedBox, Text, Text3D, CameraControls, Sky } from '@react-three/drei';
 import * as THREE from 'three';
-import { Mesh, Group } from 'three';
-import Vehicle from './Vehicle';
-import { useLoader } from '@react-three/fiber';
+import { useState, useRef, useEffect } from 'react';
+import { easing } from 'maath';
+import { useFrame } from '@react-three/fiber';
 
 export const Scene = () => {
-  const lightRef: React.Ref<any> = useRef(null!);
-  const cyposTextRef: React.Ref<any> = useRef(null!);
+  const [active, setActive] = useState('');
+  // const model = useGLTF("./model/1.glb");
+  const eshopTexture = useTexture('./textures/eshop.png');
+  const cyposTexture = useTexture('./textures/cypos.png');
+  const takeTexture = useTexture('./textures/take.png');
+  const eshopMeshPortalRef: any = useRef();
+  const cyposMeshPortalRef: any = useRef();
+  const takeMeshPortalRef: any = useRef();
+  const cameraControlsRef: any = useRef();
 
-  function Plane(props: PlaneProps) {
-    const [ref] = usePlane(() => ({ material: 'ground', type: 'Static', ...props }), useRef<Group>(null));
+  useFrame((_, delta) => {
+    easing.damp(eshopMeshPortalRef.current, 'blend', active === 'eshop' ? 1 : 0, 0.2, delta);
+    easing.damp(cyposMeshPortalRef.current, 'blend', active === 'cypos' ? 1 : 0, 0.2, delta);
+    easing.damp(takeMeshPortalRef.current, 'blend', active === 'take' ? 1 : 0, 0.2, delta);
+  });
 
-    const diff = useLoader(THREE.TextureLoader, './forest/forrest_ground_01_diff_4k.jpg');
-    const disp = useLoader(THREE.TextureLoader, './forest/forrest_ground_01_disp_4k.png');
-    const rough = useLoader(THREE.TextureLoader, './forest/forrest_ground_01_rough_4k.jpg');
-
-    const terrainSize = 5;
-    const terrainLength = 10;
-    const theXArray = Array.from({ length: terrainLength });
-    const theYArray = Array.from({ length: terrainLength });
-
-    return (
-      <group ref={ref}>
-        <Cloud speed={0.25} seed={1} scale={10} volume={5} color='hotpink' fade={-100} position={[-100, 50, -10]} />
-
-        {theXArray.map((_, iX) =>
-          theYArray.map((_, iY) => (
-            <group key={`${iX}+${iY}`}>
-              <mesh receiveShadow position-x={terrainSize * iX} position-y={terrainSize * iY}>
-                <planeGeometry args={[terrainSize, terrainSize, 32]} />
-                <meshStandardMaterial map={diff} displacementMap={disp} roughnessMap={rough} displacementScale={0.01} />
-              </mesh>
-              <mesh receiveShadow position-x={terrainSize * -iX} position-y={terrainSize * iY}>
-                <planeGeometry args={[terrainSize, terrainSize, 32]} />
-                <meshStandardMaterial map={diff} displacementMap={disp} roughnessMap={rough} displacementScale={0.01} />
-              </mesh>
-              <mesh receiveShadow position-x={terrainSize * iX} position-y={terrainSize * -iY}>
-                <planeGeometry args={[terrainSize, terrainSize, 32]} />
-                <meshStandardMaterial map={diff} displacementMap={disp} roughnessMap={rough} displacementScale={0.01} />
-              </mesh>
-              <mesh receiveShadow position-x={terrainSize * -iX} position-y={terrainSize * -iY}>
-                <planeGeometry args={[terrainSize, terrainSize, 32]} />
-                <meshStandardMaterial map={diff} displacementMap={disp} roughnessMap={rough} displacementScale={0.01} />
-              </mesh>
-            </group>
-          ))
-        )}
-      </group>
-    );
-  }
-
-  const WebsiteStop = (props: BoxProps & { imageSrc: string; link: string; label: string }) => {
-    const texture = useLoader(THREE.TextureLoader, props.imageSrc); // Load texture
-    const args: CylinderArgs = [10, 0.0001, 5, 1];
-    const [ref] = useBox(
-      () => ({
-        mass: 0,
-        args: [10, 20, 5],
-        ...props
-      }),
-      useRef<Mesh>(null)
-    );
-    const { position } = props;
-    const x = position?.[0]!;
-    const y = position?.[1]!;
-    const z = position?.[2]!;
-    const thePosition = new THREE.Vector3(x, y, z);
-    const body = document.querySelector('body')!;
-    const textRef = useRef();
-
-    return (
-      <>
-        <mesh ref={ref} castShadow>
-          <boxGeometry args={args} />
-          <meshStandardMaterial map={texture} />
-        </mesh>
-        <Text
-          ref={textRef}
-          onClick={() => {
-            window.open(props.link, '_blank');
-          }}
-          onPointerEnter={() => {
-            body.style.cursor = 'pointer';
-            if (textRef && textRef.current) {
-              (textRef.current as any).color = 'red';
-            }
-          }}
-          onPointerLeave={() => {
-            body.style.cursor = 'auto';
-            if (textRef && textRef.current) {
-              (textRef.current as any).color = 'orange';
-            }
-          }}
-          fontSize={0.4}
-          color='orange'
-          position={thePosition}
-          position-y={0.5}
-          position-z={-11}
-          rotation-x={Math.PI / 0.27}
-          maxWidth={3}
-          textAlign='center'
-        >
-          Click To Enter
-        </Text>
-        <Text3D
-          ref={cyposTextRef}
-          font='./fonts/2.json'
-          height={0.1}
-          size={2}
-          letterSpacing={0.1}
-          bevelEnabled
-          bevelSegments={20}
-          position-x={x - 5}
-          position-z={z - 4}
-          position-y={y + 1}
-        >
-          {props.label}
-          <meshNormalMaterial />
-        </Text3D>
-      </>
-    );
-  };
-
-  const Ramp = (props: BoxProps) => {
-    const args: any = [2, 2, 2];
-    const [ref] = useBox(
-      () => ({
-        mass: 10,
-        material: 'ring',
-        args: args,
-        position: [0, 10, -6],
-        ...props
-      }),
-      useRef<Mesh>(null)
-    );
-
-    return (
-      <mesh ref={ref} castShadow>
-        <boxGeometry args={args} />
-        <meshStandardMaterial color='red' />
-      </mesh>
-    );
-  };
-
-  const Wall = () => {
-    const wallHeighlt = 10;
-    const argsNorth: any = [94, wallHeighlt, 2, 1];
-    const argsSouth: any = [94, wallHeighlt, 2, 1];
-    const argsWest: any = [2, wallHeighlt, 82, 1];
-    const argsEast: any = [2, wallHeighlt, 82, 1];
-    const positionSouth: any = [0, 0.01, 40];
-    const positionNorth: any = [0, 0.01, -40];
-    const positionWest: any = [-46, 0, 0];
-    const positionEast: any = [46, 0, 0];
-
-    const [northRef] = useBox(
-      () => ({
-        mass: 0,
-        args: argsNorth,
-        position: positionNorth
-      }),
-      useRef<Mesh>(null)
-    );
-    const [southRef] = useBox(
-      () => ({
-        mass: 0,
-        args: argsNorth,
-        position: positionSouth
-      }),
-      useRef<Mesh>(null)
-    );
-    const [westRef] = useBox(
-      () => ({
-        mass: 0,
-        args: argsWest,
-        position: positionWest
-      }),
-      useRef<Mesh>(null)
-    );
-    const [eastRef] = useBox(
-      () => ({
-        mass: 0,
-        args: argsEast,
-        position: positionEast
-      }),
-      useRef<Mesh>(null)
-    );
-
-    return (
-      <>
-        <mesh ref={northRef} castShadow position={positionNorth}>
-          <boxGeometry args={argsNorth} />
-          <meshStandardMaterial color='green' />
-        </mesh>
-        <mesh ref={southRef} castShadow position={positionSouth}>
-          <boxGeometry args={argsSouth} />
-          <meshStandardMaterial color='green' />
-        </mesh>
-        <mesh ref={westRef} castShadow position={positionWest}>
-          <boxGeometry args={argsWest} />
-          <meshStandardMaterial color='green' />
-        </mesh>
-        <mesh ref={eastRef} castShadow position={positionEast}>
-          <boxGeometry args={argsEast} />
-          <meshStandardMaterial color='green' />
-        </mesh>
-      </>
-    );
-  };
+  useEffect(() => {
+    if (active === 'take') {
+      cameraControlsRef.current.setLookAt(0, 0, 3, 0, 0, 0, true);
+    } else if (active === 'eshop') {
+      cameraControlsRef.current.setLookAt(-4, 0, 3, -4, 0, 0, true);
+    } else if (active === 'cypos') {
+      cameraControlsRef.current.setLookAt(4, 0, 3, 4, 0, 0, true);
+    } else if (active === '') {
+      cameraControlsRef.current.setLookAt(0, 0, 5, 0, 0, 0, true);
+    }
+  }, [active]);
 
   return (
     <>
-      <Physics broadphase='SAP' defaultContactMaterial={{ contactEquationRelaxation: 4, friction: 1e-3 }} allowSleep>
-        <Wall />
-        <Plane rotation={[-Math.PI / 2, 0, 0]} userData={{ id: 'floor' }} />
-        <Vehicle position={[0, 2, 30]} rotation={[0, -Math.PI / 0.93, 0]} angularVelocity={[0, 0.6, 0]} />
-        {/* <Ramp /> */}
-        <Text3D
-          font='./fonts/2.json'
-          height={0.1}
-          size={4}
-          letterSpacing={0.1}
-          bevelEnabled
-          bevelSegments={20}
-          position-x={-10}
-          position-z={-20}
-          position-y={1}
-        >
-          Projects
-          <meshNormalMaterial />
-        </Text3D>
+      <CameraControls ref={cameraControlsRef} maxDistance={10} minDistance={3} />
 
-        <Text
-          fontSize={2}
-          color='white'
-          position-y={0.01}
-          position-z={22}
-          rotation-x={Math.PI / -2}
-          maxWidth={20}
-          textAlign='center'
-        >
-          Navigate with w,s,a,d keys. Brake with Space. Scroll To Zoom In/Out
-        </Text>
-        <WebsiteStop
-          position={[-15, 0.01, -10]}
-          imageSrc='./images/cypos_image.png'
-          userData={{ id: 'cypos' }}
-          link='https://www.cypossystems.com.cy/'
-          label='Cypos'
-        />
-        <WebsiteStop
-          position={[20, 0.01, -10]}
-          imageSrc='./images/eshop_image.png'
-          userData={{ id: 'eshop' }}
-          link='https://eshop.geef.cc/'
-          label='Eshop'
-        />
-        <WebsiteStop
-          position={[35, 0.01, -10]}
-          imageSrc='./images/take.png'
-          userData={{ id: 'eshop' }}
-          link='https://take.geef.cc/'
-          label='Take'
-        />
-      </Physics>
+      <RoundedBox args={[3, 4, 0.1]} position={[-5, 0, 0]} radius={0.1}>
+        <MeshPortalMaterial ref={eshopMeshPortalRef}>
+          {active !== 'eshop' && (
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='red'>
+              Eshop
+            </Text>
+          )}
+          {active === 'eshop' && (
+            <Text3D
+              font='./fonts/2.json'
+              height={0.1}
+              size={0.4}
+              letterSpacing={0.1}
+              bevelEnabled
+              bevelSegments={20}
+              position={[0, 0, 0]}
+              onDoubleClick={() => window.open('https://eshop.geef.cc')}
+            >
+              Enter
+              <meshNormalMaterial />
+            </Text3D>
+          )}
 
+          <mesh onDoubleClick={() => setActive((prev) => (prev === 'eshop' ? '' : 'eshop'))}>
+            <sphereGeometry args={[5, 64, 64]} />
+            <meshBasicMaterial map={eshopTexture} side={THREE.BackSide} />
+          </mesh>
+        </MeshPortalMaterial>
+      </RoundedBox>
+
+      <RoundedBox args={[3, 4, 0.1]} position={[0, 0, 0]} radius={0.1}>
+        <MeshPortalMaterial ref={takeMeshPortalRef}>
+          {active !== 'take' && (
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='red'>
+              Take
+            </Text>
+          )}
+          {active === 'take' && (
+            <Text3D
+              font='./fonts/2.json'
+              height={0.1}
+              size={0.4}
+              letterSpacing={-0.01}
+              bevelEnabled
+              bevelSegments={20}
+              position={[-0.5, -0.3, 0]}
+              onDoubleClick={() => window.open('https://take.geef.cc')}
+            >
+              Enter
+              <meshNormalMaterial />
+            </Text3D>
+          )}
+
+          <mesh onDoubleClick={() => setActive((prev) => (prev === 'take' ? '' : 'take'))}>
+            <sphereGeometry args={[5, 64, 64]} />
+            <meshBasicMaterial map={takeTexture} side={THREE.BackSide} />
+          </mesh>
+        </MeshPortalMaterial>
+      </RoundedBox>
+
+      <RoundedBox args={[3, 4, 0.1]} position={[5, 0, 0]} radius={0.1}>
+        <MeshPortalMaterial ref={cyposMeshPortalRef}>
+          {active !== 'cypos' && (
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='red'>
+              Cypos
+            </Text>
+          )}
+          {active === 'cypos' && (
+            <Text3D
+              font='./fonts/2.json'
+              height={0.1}
+              size={0.4}
+              letterSpacing={-0.01}
+              bevelEnabled
+              bevelSegments={20}
+              position={[-1.5, -0.2, 0]}
+              onDoubleClick={(e) => {
+                window.open('https://www.cypossystems.com.cy');
+              }}
+            >
+              Enter
+              <meshNormalMaterial />
+            </Text3D>
+          )}
+
+          <mesh onDoubleClick={() => setActive((prev) => (prev === 'cypos' ? '' : 'cypos'))}>
+            <sphereGeometry args={[5, 64, 64]} />
+            <meshBasicMaterial map={cyposTexture} side={THREE.BackSide} />
+          </mesh>
+        </MeshPortalMaterial>
+      </RoundedBox>
       <Sky sunPosition={[2.8, -0.1, -4.3]} distance={1000} rayleigh={5} />
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[1, 2, -1]} ref={lightRef} intensity={2} castShadow />
     </>
   );
 };
