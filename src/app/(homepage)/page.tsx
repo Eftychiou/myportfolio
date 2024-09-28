@@ -190,12 +190,9 @@ export default function Home() {
 
             <p>
               Having worked extensively with backend and frontend applications coupled with my professional
-              certifications. I have gained exposure, and established various technical skills relating to web
+              certifications, I have gained exposure, and established various technical skills relating to web
               developing, Object Oriented Programming and Database Management. A proactive, self-motivated individual,
-              with strong learning enthusiasm. I relish the opportunity to work as part of a team, enjoying the
-              challenge of taking on new roles and responsibilities in dynamic working environments. I am now looking to
-              further my professional experience by seeking employment in a company that allows me to progress in the
-              coding world.
+              with strong learning enthusiasm.
             </p>
           </div>
           <div className={classes.footer_title}>Since 2019</div>

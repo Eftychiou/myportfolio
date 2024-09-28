@@ -1,4 +1,4 @@
-import { useTexture, MeshPortalMaterial, RoundedBox, Text, Text3D, CameraControls, Sky } from '@react-three/drei';
+import { useTexture, MeshPortalMaterial, RoundedBox, Text, Text3D, CameraControls, Sky, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { useState, useRef, useEffect } from 'react';
 import { easing } from 'maath';
@@ -33,6 +33,14 @@ export const Scene = () => {
     }
   }, [active]);
 
+  const handlePointerOver = () => {
+    document.body.style.cursor = 'pointer';
+  };
+
+  const handlePointerOut = () => {
+    document.body.style.cursor = 'auto';
+  };
+
   return (
     <>
       <CameraControls ref={cameraControlsRef} maxDistance={10} minDistance={3} />
@@ -40,7 +48,7 @@ export const Scene = () => {
       <RoundedBox args={[3, 4, 0.1]} position={[-5, 0, 0]} radius={0.1}>
         <MeshPortalMaterial ref={eshopMeshPortalRef}>
           {active !== 'eshop' && (
-            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='red'>
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='yellow'>
               Eshop
             </Text>
           )}
@@ -53,14 +61,26 @@ export const Scene = () => {
               bevelEnabled
               bevelSegments={20}
               position={[0, 0, 0]}
-              onDoubleClick={() => window.open('https://eshop.geef.cc')}
+              onDoubleClick={(e) => {
+                e.stopPropagation();
+                window.open('https://eshop.geef.cc');
+              }}
+              onPointerOver={handlePointerOver}
+              onPointerOut={handlePointerOut}
             >
               Enter
               <meshNormalMaterial />
             </Text3D>
           )}
 
-          <mesh onDoubleClick={() => setActive((prev) => (prev === 'eshop' ? '' : 'eshop'))}>
+          <mesh
+            onDoubleClick={(e) => {
+              e.stopPropagation();
+              setActive((prev) => (prev === 'eshop' ? '' : 'eshop'));
+            }}
+            onPointerOver={handlePointerOver}
+            onPointerOut={handlePointerOut}
+          >
             <sphereGeometry args={[5, 64, 64]} />
             <meshBasicMaterial map={eshopTexture} side={THREE.BackSide} />
           </mesh>
@@ -70,7 +90,7 @@ export const Scene = () => {
       <RoundedBox args={[3, 4, 0.1]} position={[0, 0, 0]} radius={0.1}>
         <MeshPortalMaterial ref={takeMeshPortalRef}>
           {active !== 'take' && (
-            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='red'>
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='orange'>
               Take
             </Text>
           )}
@@ -83,14 +103,26 @@ export const Scene = () => {
               bevelEnabled
               bevelSegments={20}
               position={[-0.5, -0.3, 0]}
-              onDoubleClick={() => window.open('https://take.geef.cc')}
+              onDoubleClick={(e) => {
+                e.stopPropagation();
+                window.open('https://take.geef.cc');
+              }}
+              onPointerOver={handlePointerOver}
+              onPointerOut={handlePointerOut}
             >
               Enter
               <meshNormalMaterial />
             </Text3D>
           )}
 
-          <mesh onDoubleClick={() => setActive((prev) => (prev === 'take' ? '' : 'take'))}>
+          <mesh
+            onDoubleClick={(e) => {
+              e.stopPropagation();
+              setActive((prev) => (prev === 'take' ? '' : 'take'));
+            }}
+            onPointerOver={handlePointerOver}
+            onPointerOut={handlePointerOut}
+          >
             <sphereGeometry args={[5, 64, 64]} />
             <meshBasicMaterial map={takeTexture} side={THREE.BackSide} />
           </mesh>
@@ -100,7 +132,7 @@ export const Scene = () => {
       <RoundedBox args={[3, 4, 0.1]} position={[5, 0, 0]} radius={0.1}>
         <MeshPortalMaterial ref={cyposMeshPortalRef}>
           {active !== 'cypos' && (
-            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='red'>
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='purple'>
               Cypos
             </Text>
           )}
@@ -114,15 +146,25 @@ export const Scene = () => {
               bevelSegments={20}
               position={[-1.5, -0.2, 0]}
               onDoubleClick={(e) => {
+                e.stopPropagation();
                 window.open('https://www.cypossystems.com.cy');
               }}
+              onPointerOver={handlePointerOver}
+              onPointerOut={handlePointerOut}
             >
               Enter
               <meshNormalMaterial />
             </Text3D>
           )}
 
-          <mesh onDoubleClick={() => setActive((prev) => (prev === 'cypos' ? '' : 'cypos'))}>
+          <mesh
+            onDoubleClick={(e) => {
+              e.stopPropagation();
+              setActive((prev) => (prev === 'cypos' ? '' : 'cypos'));
+            }}
+            onPointerOver={handlePointerOver}
+            onPointerOut={handlePointerOut}
+          >
             <sphereGeometry args={[5, 64, 64]} />
             <meshBasicMaterial map={cyposTexture} side={THREE.BackSide} />
           </mesh>
