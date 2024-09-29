@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { useState, useRef, useEffect } from 'react';
 import { easing } from 'maath';
 import { useFrame } from '@react-three/fiber';
+import { EffectComposer, Pixelation, Scanline, Vignette } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
 
 export const Scene = () => {
   const [active, setActive] = useState('');
@@ -44,6 +46,13 @@ export const Scene = () => {
   return (
     <>
       <CameraControls ref={cameraControlsRef} maxDistance={10} minDistance={3} />
+
+      {/* <EffectComposer> */}
+      {/* <Pixelation /> */}
+      {/* <Scanline /> */}
+
+      {/* <Vignette offset={0.2} darkness={1.3} eskil={false} blendFunction={BlendFunction.NORMAL} /> */}
+      {/* </EffectComposer> */}
 
       <RoundedBox args={[3, 4, 0.1]} position={[-5, 0, 0]} radius={0.1}>
         <MeshPortalMaterial ref={eshopMeshPortalRef}>

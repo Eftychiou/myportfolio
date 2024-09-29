@@ -1,0 +1,17 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  background: #f9f9f9;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+a {
+  text-decoration: none;
+  color: #1a0dab;
+}
+a:hover {
+  text-decoration: underline;
+}

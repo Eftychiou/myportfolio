@@ -13,13 +13,14 @@
     "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^9.77.3",
     "@react-three/fiber": "^8.16.2",
+    "@react-three/postprocessing": "^2.16.2",
     "echarts": "^5.4.3",
+    "leva": "^0.9.35",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^2.10.3",
     "three": "^0.163.0",
-    "leva": "^0.9.35",
     "three-stdlib": "^2.29.4"
   },
   "devDependencies": {
