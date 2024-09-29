@@ -7,7 +7,7 @@ export async function GET() {
 
   const location = await fs.readFile(filePath, 'utf8');
 
-  const files = await fs.readdir(location);
+  const files = await fs.readdir('/home/ubuntu/StaticFiles');
 
   const htmlContent = /*html*/ `     
       <ul>
