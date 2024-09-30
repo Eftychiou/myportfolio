@@ -10,10 +10,10 @@ export async function GET() {
   const files = await fs.readdir(location.trim());
 
   const htmlContent = /*html*/ `     
-      <ul>
+    <ul>
       ${files.map((file) => `<li><a href="https://geef.cc/static/${file}" target="_blank">${file}</a></li>`).join('')}
     </ul>
-    `;
+  `;
   return new NextResponse(htmlContent, {
     headers: { 'Content-Type': 'text/html' }
   });
