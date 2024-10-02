@@ -172,7 +172,7 @@ export default function Home() {
 
         <div className={classes.description_container}>
           <div className={classes.header_title}>
-            <p>FULL STACK DEVELOPER 12</p>
+            <p>FULL STACK DEVELOPER 13</p>
           </div>
           <div className={classes.description}>
             <div className={classes.image}>
