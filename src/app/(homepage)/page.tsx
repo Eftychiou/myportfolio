@@ -192,7 +192,7 @@ export default function Home() {
               Having worked extensively with backend and frontend applications coupled with my professional
               certifications, I have gained exposure, and established various technical skills relating to web
               developing, Object Oriented Programming and Database Management. A proactive, self-motivated individual,
-              with strong learning enthusiasm..
+              with strong learning enthusiasm...
             </p>
           </div>
           <div className={classes.footer_title}>Since 2019</div>
