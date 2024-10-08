@@ -17,7 +17,27 @@ export const Scene = () => {
   const takeMeshPortalRef: any = useRef();
   const cameraControlsRef: any = useRef();
 
+  let current = 0;
+  let direction: 'left' | 'right' = 'right';
+  let enabledCameraRotation = true;
+
   useFrame((_, delta) => {
+    if (enabledCameraRotation) {
+      const max = 1;
+      const min = -1;
+      if (direction === 'right') {
+        current += delta * 0.1;
+        if (current >= max) {
+          direction = 'left';
+        }
+      } else if (direction === 'left') {
+        current -= delta * 0.1;
+        if (current <= min) {
+          direction = 'right';
+        }
+      }
+      cameraControlsRef.current.setLookAt(current, 0, 5, 0, 0, 0, true);
+    }
     easing.damp(eshopMeshPortalRef.current, 'blend', active === 'eshop' ? 1 : 0, 0.2, delta);
     easing.damp(cyposMeshPortalRef.current, 'blend', active === 'cypos' ? 1 : 0, 0.2, delta);
     easing.damp(takeMeshPortalRef.current, 'blend', active === 'take' ? 1 : 0, 0.2, delta);
@@ -26,12 +46,16 @@ export const Scene = () => {
   useEffect(() => {
     if (active === 'take') {
       cameraControlsRef.current.setLookAt(0, 0, 3, 0, 0, 0, true);
+      enabledCameraRotation = false;
     } else if (active === 'eshop') {
       cameraControlsRef.current.setLookAt(-4, 0, 3, -4, 0, 0, true);
+      enabledCameraRotation = false;
     } else if (active === 'cypos') {
       cameraControlsRef.current.setLookAt(4, 0, 3, 4, 0, 0, true);
+      enabledCameraRotation = false;
     } else if (active === '') {
       cameraControlsRef.current.setLookAt(0, 0, 5, 0, 0, 0, true);
+      enabledCameraRotation = true;
     }
   }, [active]);
 
