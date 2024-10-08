@@ -1,12 +1,21 @@
-import { useTexture, MeshPortalMaterial, RoundedBox, Text, Text3D, CameraControls, Sky, Html } from '@react-three/drei';
+import {
+  useTexture,
+  MeshPortalMaterial,
+  RoundedBox,
+  Text,
+  Text3D,
+  CameraControls,
+  Sky,
+  Html,
+  OrbitControls
+} from '@react-three/drei';
 import * as THREE from 'three';
 import { useState, useRef, useEffect } from 'react';
 import { easing } from 'maath';
 import { useFrame } from '@react-three/fiber';
-import { EffectComposer, Pixelation, Scanline, Vignette } from '@react-three/postprocessing';
-import { BlendFunction } from 'postprocessing';
 
 export const Scene = () => {
+  const [text3dFontSize, setText3dFontSize] = useState(0.4);
   const [active, setActive] = useState('');
   // const model = useGLTF("./model/1.glb");
   const eshopTexture = useTexture('./textures/eshop.png');
@@ -15,68 +24,75 @@ export const Scene = () => {
   const eshopMeshPortalRef: any = useRef();
   const cyposMeshPortalRef: any = useRef();
   const takeMeshPortalRef: any = useRef();
-  const cameraControlsRef: any = useRef();
+  let cameraControlsRef = useRef<CameraControls>(null); // Correctly typed ref
 
-  let current = 0;
-  let direction: 'left' | 'right' = 'right';
-  let enabledCameraRotation = true;
+  let xPosRef = useRef(0);
+  let direction = useRef('right' as 'left' | 'right');
+  let enabledCameraRotation = useRef(false);
 
   useFrame((_, delta) => {
-    if (enabledCameraRotation) {
+    if (enabledCameraRotation.current) {
       const max = 1;
       const min = -1;
-      if (direction === 'right') {
-        current += delta * 0.1;
-        if (current >= max) {
-          direction = 'left';
+      if (direction.current === 'right') {
+        xPosRef.current += delta * 0.1;
+        if (xPosRef.current >= max) {
+          direction.current = 'left';
         }
-      } else if (direction === 'left') {
-        current -= delta * 0.1;
-        if (current <= min) {
-          direction = 'right';
+      } else if (direction.current === 'left') {
+        xPosRef.current -= delta * 0.1;
+        if (xPosRef.current <= min) {
+          direction.current = 'right';
         }
       }
-      cameraControlsRef.current.setLookAt(current, 0, 5, 0, 0, 0, true);
+      cameraControlsRef.current!.setLookAt(xPosRef.current, 0, 5, 0, 0, 0, true);
     }
-    easing.damp(eshopMeshPortalRef.current, 'blend', active === 'eshop' ? 1 : 0, 0.2, delta);
-    easing.damp(cyposMeshPortalRef.current, 'blend', active === 'cypos' ? 1 : 0, 0.2, delta);
-    easing.damp(takeMeshPortalRef.current, 'blend', active === 'take' ? 1 : 0, 0.2, delta);
+    easing.damp(eshopMeshPortalRef.current, 'blend', active === 'eshop' ? 1 : 0, 0.1, delta);
+    easing.damp(cyposMeshPortalRef.current, 'blend', active === 'cypos' ? 1 : 0, 0.1, delta);
+    easing.damp(takeMeshPortalRef.current, 'blend', active === 'take' ? 1 : 0, 0.1, delta);
   });
 
   useEffect(() => {
     if (active === 'take') {
-      cameraControlsRef.current.setLookAt(0, 0, 3, 0, 0, 0, true);
-      enabledCameraRotation = false;
+      cameraControlsRef.current!.setLookAt(0, 0, 3, 0, 0, 0, true);
+      enabledCameraRotation.current = false;
     } else if (active === 'eshop') {
-      cameraControlsRef.current.setLookAt(-4, 0, 3, -4, 0, 0, true);
-      enabledCameraRotation = false;
+      cameraControlsRef.current!.setLookAt(-4, 0, 3, -4, 0, 0, true);
+      enabledCameraRotation.current = false;
     } else if (active === 'cypos') {
-      cameraControlsRef.current.setLookAt(4, 0, 3, 4, 0, 0, true);
-      enabledCameraRotation = false;
+      cameraControlsRef.current!.setLookAt(4, 0, 3, 4, 0, 0, true);
+      enabledCameraRotation.current = false;
     } else if (active === '') {
-      cameraControlsRef.current.setLookAt(0, 0, 5, 0, 0, 0, true);
-      enabledCameraRotation = true;
+      enabledCameraRotation.current = true;
     }
   }, [active]);
 
   const handlePointerOver = () => {
     document.body.style.cursor = 'pointer';
+    setText3dFontSize(0.41);
   };
 
   const handlePointerOut = () => {
     document.body.style.cursor = 'auto';
+    setText3dFontSize(0.4);
+  };
+
+  const handleStart = () => {
+    enabledCameraRotation.current = false;
+  };
+
+  const handleEnd = () => {
+    enabledCameraRotation.current = true;
   };
 
   return (
     <>
       <CameraControls ref={cameraControlsRef} maxDistance={10} minDistance={3} />
-
-      {/* <EffectComposer> */}
-      {/* <Pixelation /> */}
-      {/* <Scanline /> */}
-
-      {/* <Vignette offset={0.2} darkness={1.3} eskil={false} blendFunction={BlendFunction.NORMAL} /> */}
-      {/* </EffectComposer> */}
+      <OrbitControls
+        enabled={active === ''}
+        onStart={handleStart} // When mouse interaction starts
+        onEnd={handleEnd} // When mouse interaction ends
+      />
 
       <RoundedBox args={[3, 4, 0.1]} position={[-5, 0, 0]} radius={0.1}>
         <MeshPortalMaterial ref={eshopMeshPortalRef}>
@@ -89,7 +105,7 @@ export const Scene = () => {
             <Text3D
               font='./fonts/2.json'
               height={0.1}
-              size={0.4}
+              size={text3dFontSize}
               letterSpacing={0.1}
               bevelEnabled
               bevelSegments={20}
@@ -131,7 +147,7 @@ export const Scene = () => {
             <Text3D
               font='./fonts/2.json'
               height={0.1}
-              size={0.4}
+              size={text3dFontSize}
               letterSpacing={-0.01}
               bevelEnabled
               bevelSegments={20}
@@ -173,7 +189,7 @@ export const Scene = () => {
             <Text3D
               font='./fonts/2.json'
               height={0.1}
-              size={0.4}
+              size={text3dFontSize}
               letterSpacing={-0.01}
               bevelEnabled
               bevelSegments={20}
