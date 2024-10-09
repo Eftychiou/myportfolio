@@ -5,19 +5,20 @@ import {
   Text,
   Text3D,
   CameraControls,
-  Sky,
-  Html,
-  OrbitControls
+  // useHelper,
+  MeshReflectorMaterial,
+  Stars
 } from '@react-three/drei';
 import * as THREE from 'three';
+import { DirectionalLightHelper } from 'three';
 import { useState, useRef, useEffect } from 'react';
 import { easing } from 'maath';
 import { useFrame } from '@react-three/fiber';
-
+import {} from 'three-stdlib';
 export const Scene = () => {
   const [text3dFontSize, setText3dFontSize] = useState(0.4);
   const [active, setActive] = useState('');
-  // const model = useGLTF("./model/1.glb");
+  const cameraMaxDistanceRef = useRef(10);
   const eshopTexture = useTexture('./textures/eshop.png');
   const cyposTexture = useTexture('./textures/cypos.png');
   const takeTexture = useTexture('./textures/take.png');
@@ -25,13 +26,16 @@ export const Scene = () => {
   const cyposMeshPortalRef: any = useRef();
   const takeMeshPortalRef: any = useRef();
   let cameraControlsRef = useRef<CameraControls>(null); // Correctly typed ref
+  const lightRef: React.Ref<any> = useRef(null!);
+
+  // useHelper(lightRef, DirectionalLightHelper, 1); // The "5" is the size of the helper
 
   let xPosRef = useRef(0);
   let direction = useRef('right' as 'left' | 'right');
   let enabledCameraRotation = useRef(false);
 
   useFrame((_, delta) => {
-    if (enabledCameraRotation.current) {
+    if (enabledCameraRotation.current && active === '') {
       const max = 1;
       const min = -1;
       if (direction.current === 'right') {
@@ -56,14 +60,18 @@ export const Scene = () => {
     if (active === 'take') {
       cameraControlsRef.current!.setLookAt(0, 0, 3, 0, 0, 0, true);
       enabledCameraRotation.current = false;
+      cameraMaxDistanceRef.current = 10;
     } else if (active === 'eshop') {
       cameraControlsRef.current!.setLookAt(-4, 0, 3, -4, 0, 0, true);
       enabledCameraRotation.current = false;
+      cameraMaxDistanceRef.current = 10;
     } else if (active === 'cypos') {
       cameraControlsRef.current!.setLookAt(4, 0, 3, 4, 0, 0, true);
       enabledCameraRotation.current = false;
+      cameraMaxDistanceRef.current = 10;
     } else if (active === '') {
       enabledCameraRotation.current = true;
+      cameraMaxDistanceRef.current = 0;
     }
   }, [active]);
 
@@ -87,17 +95,34 @@ export const Scene = () => {
 
   return (
     <>
-      <CameraControls ref={cameraControlsRef} maxDistance={10} minDistance={3} />
-      <OrbitControls
-        enabled={active === ''}
+      <CameraControls
+        ref={cameraControlsRef}
+        maxDistance={cameraMaxDistanceRef.current}
+        minDistance={3}
         onStart={handleStart} // When mouse interaction starts
-        onEnd={handleEnd} // When mouse interaction ends
+        onEnd={handleEnd}
+        // enabled={true}
+        makeDefault
       />
 
-      <RoundedBox args={[3, 4, 0.1]} position={[-5, 0, 0]} radius={0.1}>
+      <Stars radius={2} depth={50} count={500} factor={1} saturation={0} fade speed={1} />
+      <directionalLight color='#B0A1FE' position={[16, 5, 0]} ref={lightRef} intensity={100} castShadow />
+
+      <mesh position={[-8, 0, -10]} receiveShadow>
+        <sphereGeometry args={[8, 50, 50]} />
+        <MeshReflectorMaterial
+          resolution={1024}
+          color='gray'
+          blur={[1000, 1000]}
+          mixBlur={1}
+          mirror={1} // lower 0 higher 1
+        />
+      </mesh>
+
+      <RoundedBox args={[3, 4, 0.1]} position={[-5, 0, 0]} radius={0.1} castShadow>
         <MeshPortalMaterial ref={eshopMeshPortalRef}>
           {active !== 'eshop' && (
-            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='yellow'>
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='black'>
               Eshop
             </Text>
           )}
@@ -136,10 +161,10 @@ export const Scene = () => {
         </MeshPortalMaterial>
       </RoundedBox>
 
-      <RoundedBox args={[3, 4, 0.1]} position={[0, 0, 0]} radius={0.1}>
+      <RoundedBox args={[3, 4, 0.1]} position={[0, 0, 0]} radius={0.1} castShadow>
         <MeshPortalMaterial ref={takeMeshPortalRef}>
           {active !== 'take' && (
-            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='orange'>
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='black'>
               Take
             </Text>
           )}
@@ -178,10 +203,10 @@ export const Scene = () => {
         </MeshPortalMaterial>
       </RoundedBox>
 
-      <RoundedBox args={[3, 4, 0.1]} position={[5, 0, 0]} radius={0.1}>
+      <RoundedBox args={[3, 4, 0.1]} position={[5, 0, 0]} radius={0.1} castShadow>
         <MeshPortalMaterial ref={cyposMeshPortalRef}>
           {active !== 'cypos' && (
-            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='purple'>
+            <Text font='./fonts/bold.ttf' position={[0, 1.5, 0]} fontSize={0.6} color='black'>
               Cypos
             </Text>
           )}
@@ -219,7 +244,6 @@ export const Scene = () => {
           </mesh>
         </MeshPortalMaterial>
       </RoundedBox>
-      <Sky sunPosition={[2.8, -0.1, -4.3]} distance={1000} rayleigh={5} />
     </>
   );
 };

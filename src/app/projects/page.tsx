@@ -18,6 +18,8 @@ export default function Projects() {
   return (
     <div className={classes.page}>
       <Canvas
+        // shadows // enable shadows
+        gl={{ antialias: true, alpha: true }}
         camera={{
           fov: 75,
           near: 0.1,
