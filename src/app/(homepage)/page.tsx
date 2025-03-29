@@ -18,6 +18,7 @@ import { COLORS, RADIAN, data, renderCustomizedLabel, languagesList } from './da
 import { setup } from './canvas';
 import React from 'react';
 import Link from 'next/link';
+import { IFrameGame } from '@/components/IFrameGame';
 
 // eslint-disable-next-line react/display-name
 const ChildComponent = React.memo((props: { setLanguages: any }) => {
@@ -165,7 +166,8 @@ export default function Home() {
     <div className={classes.page}>
       <canvas id='world' width='383' height='898'></canvas>
       <section id='about_me' className={classes.about_me}>
-        <div className={classes.filler}></div>
+        <IFrameGame />
+        {/* <div className={classes.filler}></div> */}
         <span className={classes.clip}>
           <div className={classes.clip_image}></div>
         </span>
