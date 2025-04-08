@@ -1,19 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useState } from 'react';
+import classes from './IFrameGame.module.scss';
 
 export const IFrameGame = () => {
-  const iframeRef = useRef<any>(null);
-  console.log('process.env.IFRAMEGAMESERVER', process.env.IFRAMEGAMESERVER);
-
+  const [show, setShow] = useState(false);
   return (
-    <div style={{ zIndex: 998, position: 'absolute', top: '70px', left: 10, overflow: 'hidden' }}>
+    <div className={classes.IFrameGame}>
+      <div className={classes.toggle} onClick={() => setShow((state) => !state)}>
+        Chat
+      </div>
+
       <iframe
-        ref={iframeRef}
-        src='http://192.168.0.135:3000/game'
-        title='Example Iframe'
-        width='800'
-        height='600'
-        style={{ border: 'none', opacity: 0.8, borderRadius: 10 }}
-      ></iframe>
+        style={{ display: show ? 'block' : 'none' }}
+        src={process.env.IFRAME_URL}
+        width={process.env.IFRAME_WIDTH}
+        height={process.env.IFRAME_HEIGHT}
+      />
     </div>
   );
 };

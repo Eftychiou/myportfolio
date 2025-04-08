@@ -26,11 +26,7 @@ const ChildComponent = React.memo((props: { setLanguages: any }) => {
     <div className={[classes.first_chart, classes.chart].join(' ')}>
       <div className={classes.inner}>
         <ResponsiveContainer width='100%' height='100%'>
-          <PieChart
-            onMouseLeave={() => {
-              props.setLanguages(languagesList);
-            }}
-          >
+          <PieChart onMouseLeave={() => props.setLanguages(languagesList)}>
             <Pie
               cursor='pointer'
               data={data}
@@ -174,7 +170,7 @@ export default function Home() {
 
         <div className={classes.description_container}>
           <div className={classes.header_title}>
-            <p>FULL STACK DEVELOPER</p>
+            <p>Software Developer</p>
           </div>
           <div className={classes.description}>
             <div className={classes.image}>
@@ -189,12 +185,11 @@ export default function Home() {
                 Download CV
               </div>
             </div>
-
             <p>
-              Having worked extensively with backend and frontend applications coupled with my professional
-              certifications, I have gained exposure, and established various technical skills relating to web
-              developing, Object Oriented Programming and Database Management. A proactive, self-motivated individual,
-              with strong learning enthusiasm
+              Having worked extensively with frontend applications coupled with my professional certifications I have
+              gained exposure and established various technical skills relating to web developing. A proactive, self
+              motivated individual, with strong learning enthusiasm. I relish the opportunity to work as part of a team,
+              enjoying the challenge of taking on new roles and responsibilities in dynamic working environments.
             </p>
           </div>
           <div className={classes.footer_title}>Since 2019</div>
@@ -203,8 +198,7 @@ export default function Home() {
 
       <section id='resume' className={classes.resume}>
         <div className={classes.title}>
-          Resume
-          <div />
+          Resume <div />
         </div>
         <div className={classes.image}>
           <Image src='/images/react.png' alt='react' width={200} height={200} />
@@ -215,11 +209,11 @@ export default function Home() {
           <p>Software Developer</p>
           <p>2019 - 2022</p>
           <br />
-          <p>Contributed to the creation and maintenance of software solutions.</p>
-          <p>Developed and integrated APIs to enhance system functionalities.</p>
-          <p>Worked on React applications, ensuring a seamless user experience.</p>
-          <p>Collaborated with cross-functional teams to deliver high-quality software products.</p>
-          <p>Participated in code reviews to maintain code quality and adherence to best practices.</p>
+          <p>
+            Built web applications using Next.js, leveraging both server-side rendering and client-side rendering to
+            optimize performance and user experience. Created and implemented webhooks with Node.js to integrate
+            third-party APIs, ensuring seamless data synchronization and communication between systems.
+          </p>
         </div>
         <div className={[classes.description, classes.amdocs].join(' ')}>
           <Image src='/images/amdocs.png' alt='amdocs' width={70} height={70} className={classes.image} />
@@ -227,11 +221,14 @@ export default function Home() {
           <p>Software Developer</p>
           <p>2022 - Present</p>
           <br />
-          <p>Continuing to develop and integrate APIs for enhanced system connectivity.</p>
-          <p>Focused on creating React applications to meet user interface requirements.</p>
-          <p>Participating in the design and implementation of scalable software solutions.</p>
-          <p>Collaborating with team members to address complex technical challenges.</p>
-          <p>Staying updated with industry trends and incorporating best practices into development processes.</p>
+          <p>
+            Developed and maintained scalable front-end applications using React, Redux, TypeScript. Wrote mocking
+            endpoints using Node.js and Express.js, ensuring seamless REST integration. Collaborated with backend teams
+            to integrate APIs, optimize data handling, and improve system performance. Implemented best practices for
+            state management, UI performance, and reusable component structures. Conducted code reviews and provided
+            technical mentorship to junior developers. Worked closely with product owners and UX/UI designers to improve
+            user experience.
+          </p>
         </div>
       </section>
 
@@ -304,21 +301,14 @@ export default function Home() {
                     cy='50%'
                     outerRadius='70%'
                     data={languages}
-                    onClick={(a) => {
-                      setLanguageActiveLabel(a.activeLabel as string);
-                      console.log(a.activeLabel);
-                    }}
+                    onClick={(a) => setLanguageActiveLabel(a.activeLabel as string)}
                   >
                     <PolarGrid />
                     <PolarAngleAxis
                       // stroke='#B0A1FE'
-                      onMouseEnter={(a) => {
-                        setLanguageActiveLabel(a.value);
-                      }}
+                      onMouseEnter={(a) => setLanguageActiveLabel(a.value)}
                       dataKey='subject'
-                      onClick={(a) => {
-                        setLanguageActiveLabel(a.value);
-                      }}
+                      onClick={(a) => setLanguageActiveLabel(a.value)}
                     />
 
                     {/* <PolarRadiusAxis /> */}
