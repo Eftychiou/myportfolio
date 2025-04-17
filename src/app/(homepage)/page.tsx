@@ -19,8 +19,8 @@ import { setup } from './canvas';
 import React from 'react';
 import Link from 'next/link';
 import { IFrameGame } from '@/components/IFrameGame/IFrameGame';
+import { CONTACT_LINKS, JOBS, SKILLS } from './constants';
 
-// eslint-disable-next-line react/display-name
 const FirstChart = React.memo((props: { setLanguages: any }) => {
   return (
     <div className={classes.first_chart}>
@@ -59,6 +59,47 @@ const FirstChart = React.memo((props: { setLanguages: any }) => {
     </div>
   );
 });
+
+FirstChart.displayName = 'FirstChart';
+
+const SecondChart = React.memo((props: { languages: any; setLanguageActiveLabel: any }) => {
+  return (
+    <div className={classes.second_chart}>
+      <div className={classes.inner}>
+        <div className={classes.chart_container}>
+          <ResponsiveContainer width='100%' height='100%'>
+            <RadarChart
+              style={{ cursor: 'pointer' }}
+              cx='60%'
+              cy='50%'
+              outerRadius='70%'
+              data={props.languages}
+              onClick={(a) => props.setLanguageActiveLabel(a.activeLabel as string)}
+            >
+              <PolarGrid />
+              <PolarAngleAxis
+                stroke='white'
+                onMouseEnter={(a) => props.setLanguageActiveLabel(a.value)}
+                dataKey='subject'
+                onClick={(a) => props.setLanguageActiveLabel(a.value)}
+              />
+
+              {/* <PolarRadiusAxis /> */}
+              <Radar
+                dataKey='value'
+                stroke={props.languages.length === 7 ? '#CB247C' : '#5f7d6e'}
+                fill={props.languages.length === 7 ? '#CB247C' : '#5f7d6e'}
+                fillOpacity={0.6}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+SecondChart.displayName = 'SecondChart';
 
 export default function Home() {
   const [skillsIsShow, setSkillsIsShown] = useState(false);
@@ -207,33 +248,22 @@ export default function Home() {
         <div className={`${classes.image} ${classes.image2}`}>
           <Image src='/images/programming-languages.png' alt='languages' width={200} height={200} />
         </div>
-        <div className={[classes.description, classes.cypos].join(' ')}>
-          <Image src='/images/cypos.png' alt='cypos' width={100} height={100} className={classes.image} />
-          <h2>CyposSystems</h2>
-          <p>Software Developer</p>
-          <p>2019 - 2022</p>
-          <br />
-          <p>
-            Built web applications using Next.js, leveraging both server-side rendering and client-side rendering to
-            optimize performance and user experience. Created and implemented webhooks with Node.js to integrate
-            third-party APIs, ensuring seamless data synchronization and communication between systems.
-          </p>
-        </div>
-        <div className={[classes.description, classes.amdocs].join(' ')}>
-          <Image src='/images/amdocs.png' alt='amdocs' width={70} height={70} className={classes.image} />
-          <h2>Amdocs</h2>
-          <p>Software Developer</p>
-          <p>2022 - Present</p>
-          <br />
-          <p>
-            Developed and maintained scalable front-end applications using React, Redux, TypeScript. Wrote mocking
-            endpoints using Node.js and Express.js, ensuring seamless REST integration. Collaborated with backend teams
-            to integrate APIs, optimize data handling, and improve system performance. Implemented best practices for
-            state management, UI performance, and reusable component structures. Conducted code reviews and provided
-            technical mentorship to junior developers. Worked closely with product owners and UX/UI designers to improve
-            user experience.
-          </p>
-        </div>
+        {JOBS.map((item, index) => (
+          <div key={index} className={[classes.description, classes[item.className]].join(' ')}>
+            <Image
+              src={item.logo.src}
+              alt={item.logo.alt}
+              width={item.logo.width}
+              height={item.logo.height}
+              className={classes.image}
+            />
+            <h2>{item.company}</h2>
+            <p>{item.role}</p>
+            <p>{item.period}</p>
+            <br />
+            <p>{item.description}</p>
+          </div>
+        ))}
       </section>
 
       <section id='skills' className={classes.skills} ref={skillsRef}>
@@ -242,108 +272,30 @@ export default function Home() {
         </div>
         <div className={classes.description}>
           <ul>
-            <li className={languageActiveLabel === 'Javascript' ? classes.active : classes.inactive}>
-              <strong>Javascript:</strong> Used extensively for frontend and backend development, including building
-              interactive user interfaces and server-side scripting.
-            </li>
-            <li className={languageActiveLabel === 'NextJS' ? classes.active : classes.inactive}>
-              <strong>NextJS:</strong> Leveraged for building server-rendered React applications with ease of use and
-              enhanced performance.
-            </li>
-            <li className={languageActiveLabel === 'React' ? classes.active : classes.inactive}>
-              <strong>React:</strong> Employed for building reusable UI components and developing single-page
-              applications with efficient state management.
-            </li>
-            <li className={languageActiveLabel === 'CSS' ? classes.active : classes.inactive}>
-              <strong>CSS:</strong> Utilized for styling web applications and ensuring a visually appealing user
-              experience across different devices and screen sizes.
-            </li>
-            <li className={languageActiveLabel === 'NodeJS' ? classes.active : classes.inactive}>
-              <strong>NodeJS:</strong> Used for building scalable and high-performance server-side applications, RESTful
-              APIs, and real-time applications.
-            </li>
-            <li className={languageActiveLabel === 'MongoDB' ? classes.active : classes.inactive}>
-              <strong>MongoDB:</strong> Employed as a NoSQL database solution for storing and managing unstructured data
-              in web applications.
-            </li>
-            <li className={languageActiveLabel === 'SQL' ? classes.active : classes.inactive}>
-              <strong>SQL:</strong> Utilized for querying and managing relational databases, ensuring data integrity and
-              efficient data retrieval.
-            </li>
-            <li className={languageActiveLabel === 'Java' ? classes.active : classes.inactive}>
-              <strong>Java:</strong> Employed for building scalable backend systems, Android mobile applications, and
-              enterprise-level software solutions.
-            </li>
-            <li className={languageActiveLabel === 'Andoid Java' ? classes.active : classes.inactive}>
-              <strong>Android Java:</strong> Utilized for developing native Android applications, leveraging the Android
-              SDK and platform-specific APIs.
-            </li>
-            <li className={languageActiveLabel === 'NGINX' ? classes.active : classes.inactive}>
-              <strong>NGINX:</strong> Employed as a reverse proxy server and load balancer for optimizing web server
-              performance and managing incoming traffic.
-            </li>
-            <li className={languageActiveLabel === 'Docker' ? classes.active : classes.inactive}>
-              <strong>Docker:</strong> Utilized for containerizing applications and deploying them in isolated
-              environments, ensuring consistency across different development and production environments.
-            </li>
+            {SKILLS.map((item, index) => (
+              <li key={index} className={languageActiveLabel === item.label ? classes.active : classes.inactive}>
+                <strong>{item.label}:</strong> {item.description}
+              </li>
+            ))}
           </ul>
         </div>
         {skillsIsShow && (
           <div className={classes.charts}>
             <FirstChart setLanguages={setLanguages} />
-            <div className={classes.second_chart}>
-              <div className={classes.inner}>
-                <div className={classes.chart_container}>
-                  <ResponsiveContainer width='100%' height='100%'>
-                    <RadarChart
-                      style={{ cursor: 'pointer' }}
-                      cx='60%'
-                      cy='50%'
-                      outerRadius='70%'
-                      data={languages}
-                      onClick={(a) => setLanguageActiveLabel(a.activeLabel as string)}
-                    >
-                      <PolarGrid />
-                      <PolarAngleAxis
-                        stroke='white'
-                        onMouseEnter={(a) => setLanguageActiveLabel(a.value)}
-                        dataKey='subject'
-                        onClick={(a) => setLanguageActiveLabel(a.value)}
-                      />
-
-                      {/* <PolarRadiusAxis /> */}
-                      <Radar
-                        dataKey='value'
-                        stroke={languages.length === 7 ? '#CB247C' : '#5f7d6e'}
-                        fill={languages.length === 7 ? '#CB247C' : '#5f7d6e'}
-                        fillOpacity={0.6}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-            </div>
+            <SecondChart languages={languages} setLanguageActiveLabel={setLanguageActiveLabel} />
           </div>
         )}
       </section>
+
       <section id='contact' className={classes.contact}>
         <div className={classes.links}>
-          <div className={classes.link}>
-            <Link href='mailto:eftichiou@hotmail.com' target='_blank'>
-              <Image src='/images/email.png' alt='email' width={70} height={70} />
-            </Link>
-          </div>
-          <div className={classes.link}>
-            <Link href='https://www.linkedin.com/in/george-eftichiou-8b1a11100/' target='_blank'>
-              <Image src='/images/linkedin.png' alt='linkedin' width={70} height={70} />
-            </Link>
-          </div>
-
-          <div className={classes.link}>
-            <Link href='https://www.facebook.com/profile.php?id=100011412591865' target='_blank'>
-              <Image src='/images/facebook.png' alt='facebook' width={70} height={70} />
-            </Link>
-          </div>
+          {CONTACT_LINKS.map((link, index) => (
+            <div className={classes.link} key={index}>
+              <Link href={link.href} target='_blank'>
+                <Image src={link.src} alt={link.alt} width={70} height={70} />
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
     </div>
