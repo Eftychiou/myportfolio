@@ -1,19 +1,34 @@
-import { useState } from 'react';
+'use client';
+import { useEffect, useState } from 'react';
 import classes from './IFrameGame.module.scss';
 
 export const IFrameGame = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 900px)');
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   return (
-    <div className={classes.IFrameGame}>
+    <div className={classes.IFrameGame} style={{ display: isMobile ? 'none' : 'block' }}>
       <div className={classes.toggle} onClick={() => setShow((state) => !state)}>
-        Chat
+        CHAT
       </div>
 
       <iframe
-        style={{ display: show ? 'block' : 'none' }}
+        className={show ? classes.visible : classes.not_visible}
+        // style={{ display: show ? 'block' : 'none' }}
         src={process.env.IFRAME_URL}
-        width={process.env.IFRAME_WIDTH}
-        height={process.env.IFRAME_HEIGHT}
+        width={800}
+        height={600}
       />
     </div>
   );

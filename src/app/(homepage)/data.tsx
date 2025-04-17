@@ -3,7 +3,7 @@ export const data = [
   { name: 'BACKEND', value: 68 }
 ];
 
-export const COLORS = ['#34B4FF', '#CB247C'];
+export const COLORS = ['#5f7d6e ', '#CB247C'];
 
 export const RADIAN = Math.PI / 180;
 
@@ -36,9 +36,9 @@ export const renderCustomizedLabel = (
         {`${(percent * 100).toFixed(0)}%`}
       </text>
       <text
-        x={360}
+        x={250}
         y={y}
-        fill={data[index].name === 'FRONTEND' ? '#34B4FF' : '#CB247C'}
+        fill={data[index].name === 'FRONTEND' ? 'white' : 'white'}
         textAnchor={'start'}
         dominantBaseline='central'
         fontWeight='bold'

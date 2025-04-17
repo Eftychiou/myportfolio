@@ -18,24 +18,24 @@ import { COLORS, RADIAN, data, renderCustomizedLabel, languagesList } from './da
 import { setup } from './canvas';
 import React from 'react';
 import Link from 'next/link';
-import { IFrameGame } from '@/components/IFrameGame';
+import { IFrameGame } from '@/components/IFrameGame/IFrameGame';
 
 // eslint-disable-next-line react/display-name
-const ChildComponent = React.memo((props: { setLanguages: any }) => {
+const FirstChart = React.memo((props: { setLanguages: any }) => {
   return (
-    <div className={[classes.first_chart, classes.chart].join(' ')}>
+    <div className={classes.first_chart}>
       <div className={classes.inner}>
         <ResponsiveContainer width='100%' height='100%'>
           <PieChart onMouseLeave={() => props.setLanguages(languagesList)}>
             <Pie
               cursor='pointer'
               data={data}
-              cx='50%'
+              cx='30%'
               cy='50%'
               labelLine={false}
               label={(a: any) => renderCustomizedLabel(a, props.setLanguages, languagesList)}
               outerRadius={100}
-              fill='#8884d8'
+              // fill='#8884d8'
               dataKey='value'
             >
               {data.map((entry, index) => (
@@ -161,8 +161,9 @@ export default function Home() {
   return (
     <div className={classes.page}>
       <canvas id='world' width='383' height='898'></canvas>
+      <IFrameGame />
+
       <section id='about_me' className={classes.about_me}>
-        <IFrameGame />
         {/* <div className={classes.filler}></div> */}
         <span className={classes.clip}>
           <div className={classes.clip_image}></div>
@@ -203,6 +204,9 @@ export default function Home() {
         <div className={classes.image}>
           <Image src='/images/react.png' alt='react' width={200} height={200} />
         </div>
+        <div className={`${classes.image} ${classes.image2}`}>
+          <Image src='/images/programming-languages.png' alt='languages' width={200} height={200} />
+        </div>
         <div className={[classes.description, classes.cypos].join(' ')}>
           <Image src='/images/cypos.png' alt='cypos' width={100} height={100} className={classes.image} />
           <h2>CyposSystems</h2>
@@ -233,10 +237,6 @@ export default function Home() {
       </section>
 
       <section id='skills' className={classes.skills} ref={skillsRef}>
-        <div className={classes.image}>
-          <Image src='/images/programming-languages.png' alt='languages' width={200} height={200} />
-        </div>
-
         <div className={classes.title}>
           Skills <div />
         </div>
@@ -288,38 +288,39 @@ export default function Home() {
             </li>
           </ul>
         </div>
-        {skillsIsShow && <ChildComponent setLanguages={setLanguages} />}
-
         {skillsIsShow && (
-          <div className={[classes.second_chart, classes.chart].join(' ')}>
-            <div className={classes.inner}>
-              <div className={classes.chart_container}>
-                <ResponsiveContainer width='100%' height='100%'>
-                  <RadarChart
-                    style={{ cursor: 'pointer' }}
-                    cx='50%'
-                    cy='50%'
-                    outerRadius='70%'
-                    data={languages}
-                    onClick={(a) => setLanguageActiveLabel(a.activeLabel as string)}
-                  >
-                    <PolarGrid />
-                    <PolarAngleAxis
-                      // stroke='#B0A1FE'
-                      onMouseEnter={(a) => setLanguageActiveLabel(a.value)}
-                      dataKey='subject'
-                      onClick={(a) => setLanguageActiveLabel(a.value)}
-                    />
+          <div className={classes.charts}>
+            <FirstChart setLanguages={setLanguages} />
+            <div className={classes.second_chart}>
+              <div className={classes.inner}>
+                <div className={classes.chart_container}>
+                  <ResponsiveContainer width='100%' height='100%'>
+                    <RadarChart
+                      style={{ cursor: 'pointer' }}
+                      cx='60%'
+                      cy='50%'
+                      outerRadius='70%'
+                      data={languages}
+                      onClick={(a) => setLanguageActiveLabel(a.activeLabel as string)}
+                    >
+                      <PolarGrid />
+                      <PolarAngleAxis
+                        stroke='white'
+                        onMouseEnter={(a) => setLanguageActiveLabel(a.value)}
+                        dataKey='subject'
+                        onClick={(a) => setLanguageActiveLabel(a.value)}
+                      />
 
-                    {/* <PolarRadiusAxis /> */}
-                    <Radar
-                      dataKey='value'
-                      stroke={languages.length === 7 ? '#CB247C' : '#34B4FF'}
-                      fill={languages.length === 7 ? '#CB247C' : '#34B4FF'}
-                      fillOpacity={0.6}
-                    />
-                  </RadarChart>
-                </ResponsiveContainer>
+                      {/* <PolarRadiusAxis /> */}
+                      <Radar
+                        dataKey='value'
+                        stroke={languages.length === 7 ? '#CB247C' : '#5f7d6e'}
+                        fill={languages.length === 7 ? '#CB247C' : '#5f7d6e'}
+                        fillOpacity={0.6}
+                      />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
           </div>

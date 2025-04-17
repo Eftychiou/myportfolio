@@ -7,7 +7,7 @@ export function setup(window) {
   var RADIUS_SCALE_MAX = 1.5;
 
   // The number of particles that are used to generate the trail
-  var QUANTITY = 25;
+  var QUANTITY = 3;
 
   var canvas;
   var context;

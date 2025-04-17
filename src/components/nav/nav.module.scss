@@ -36,6 +36,7 @@
     display: flex;
     gap: 5px;
     align-items: center;
+    white-space: nowrap;
     &:hover {
       color: #212325;
       .image {
@@ -51,6 +52,19 @@
       font-weight: 900;
       .image {
         filter: invert(0%);
+      }
+    }
+  }
+  @media (max-width: 900px) {
+    .home {
+      display: none;
+    }
+
+    justify-content: center;
+    .link {
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      .image {
+        display: none;
       }
     }
   }
