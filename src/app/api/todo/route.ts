@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
   await addTodo(body.todo);
   return new NextResponse(null, {
-    status: 200 // OK status without headers
+    status: 200
   });
 }
 
