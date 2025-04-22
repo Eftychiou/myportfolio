@@ -14,6 +14,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
+      <head>
+        <meta name='theme-color' content='#7D5F6E' />
+      </head>
       <body className={[inter.className, classes.body].join(' ')}>
         <header>
           <Nav />

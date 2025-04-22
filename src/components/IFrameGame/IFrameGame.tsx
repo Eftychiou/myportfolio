@@ -4,7 +4,7 @@ import classes from './IFrameGame.module.scss';
 
 export const IFrameGame = () => {
   const [show, setShow] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 900px)');
@@ -12,6 +12,8 @@ export const IFrameGame = () => {
     const handleChange = (e: MediaQueryListEvent) => {
       setIsMobile(e.matches);
     };
+
+    handleChange(mediaQuery as unknown as MediaQueryListEvent);
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);

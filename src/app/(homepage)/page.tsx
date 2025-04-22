@@ -112,9 +112,24 @@ export default function Home() {
 
   const skillsRef = useRef(null);
 
+  const [latestChatMsg, setLatestChatMsg] = useState('');
+
   useEffect(() => {
     if (window && document) {
-      setup(window);
+      const mediaQuery = window.matchMedia('(max-width: 900px)');
+      if (!mediaQuery.matches) {
+        setup(window);
+      }
+      window.addEventListener('message', (event) => {
+        // Optional: check event.origin for security
+
+        if (event.data?.type === 'FROM_IFRAME') {
+          const data: { type: string; playerName: string; message: string; isCurrentUser: boolean } = event.data.data;
+          if (!data.isCurrentUser) {
+          }
+          // setLatestChatMsg(data.message);
+        }
+      });
     }
   }, []);
 
@@ -205,6 +220,7 @@ export default function Home() {
       <IFrameGame />
 
       <section id='about_me' className={classes.about_me}>
+        <p className={classes.latest_chat_msg}>{latestChatMsg}</p>
         {/* <div className={classes.filler}></div> */}
         <span className={classes.clip}>
           <div className={classes.clip_image}></div>

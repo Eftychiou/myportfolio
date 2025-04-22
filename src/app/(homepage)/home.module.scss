@@ -29,6 +29,12 @@ $bubble-border: 0 -1 * $px $white, 0 -2 * $px $black, $px 0 $white, $px -1 * $px
     grid-template-rows: repeat(12, 1fr);
     padding-top: 60px;
     position: relative;
+    .latest_chat_msg {
+      background-color: red;
+      position: absolute;
+      right: 100px;
+      top: 100px;
+    }
 
     .title {
       z-index: 2;
@@ -97,9 +103,13 @@ $bubble-border: 0 -1 * $px $white, 0 -2 * $px $black, $px 0 $white, $px -1 * $px
           height: calc(100vh - 60px);
           background-size: cover !important;
           background-attachment: fixed !important;
+          @media (max-width: 900px) {
+            background-attachment: local !important;
+          }
           background: url('/images/hero.jpg') no-repeat center;
           position: absolute;
-          // clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
+          // clip-path: circle(90.2% at 16% 84%);
+
           right: 0;
           z-index: -1;
           top: 0;
@@ -346,6 +356,7 @@ $bubble-border: 0 -1 * $px $white, 0 -2 * $px $black, $px 0 $white, $px -1 * $px
       }
     }
     &.resume {
+      min-height: 120vh;
       .image {
         grid-row: 1;
         grid-column: 11;
@@ -436,6 +447,9 @@ $bubble-border: 0 -1 * $px $white, 0 -2 * $px $black, $px 0 $white, $px -1 * $px
     }
     &.skills {
       min-height: 120vh;
+      @media (max-width: 900px) {
+        min-height: 160vh;
+      }
 
       .title {
         grid-row: 1;
