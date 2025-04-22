@@ -1,5 +1,7 @@
 import './styles.css';
 
+export const dynamic = 'force-dynamic'; // Disable static rendering
+
 export default async function FilesPage() {
   const res = await fetch('http://localhost:3003/api/files', {
     cache: 'no-store' // Ensures data is fetched on every request (SSR-like behavior)

@@ -2,6 +2,8 @@ import { promises as fs } from 'fs'; // Use promises version of fs for async ope
 import path from 'path'; // To handle file paths
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic'; // Disable static rendering
+
 export async function GET() {
   const filePath = path.join(process.cwd(), 'src', 'app', 'api', 'files', 'location.txt');
 
