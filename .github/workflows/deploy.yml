@@ -1,0 +1,56 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Archive production build
+        run: |
+          tar -czf build-artifacts.tar.gz .next package.json public node_modules
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build-artifacts.tar.gz
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Copy artifacts to Lightsail
+        run: |
+          scp -i ${{ secrets.LIGHTSAIL_KEY }} -o StrictHostKeyChecking=no build-artifacts.tar.gz ubuntu@${{ secrets.LIGHTSAIL_HOST }}:/home/ubuntu/
+
+      - name: SSH into Lightsail and deploy
+        run: |
+          ssh -i ${{ secrets.LIGHTSAIL_KEY }} -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
+            tar -xzf build-artifacts.tar.gz
+            npm run pm2:start
+          EOF
