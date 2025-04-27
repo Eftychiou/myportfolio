@@ -26,7 +26,7 @@ jobs:
 
       - name: Archive production build
         run: |
-          tar -czf build-artifacts.tar.gz .next package.json public node_modules
+          tar -czf build-artifacts.tar.gz .next package.json public node_modules todos.db
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -45,18 +45,11 @@ jobs:
           name: build
           path: .
 
-      - name: Debug SSH connection
-        run: |
-          echo "${{ secrets.LIGHTSAIL_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} 'echo "SSH connection successful"'
-          rm -f private_key.pem  # Clean up the private key file after use
-
       - name: Copy artifacts to Lightsail
         run: |
           echo "${{ secrets.LIGHTSAIL_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          scp -i private_key.pem -o StrictHostKeyChecking=no build-artifacts.tar.gz ubuntu@${{ secrets.LIGHTSAIL_HOST }}:/home/ubuntu/
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} "mkdir -p /home/ubuntu/Projects/portfolio"
           rm -f private_key.pem  # Clean up the private key file after use
 
       - name: SSH into Lightsail and deploy

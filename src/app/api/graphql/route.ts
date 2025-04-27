@@ -1,11 +1,8 @@
 import { createSchema, createYoga } from 'graphql-yoga';
 import { promises as fs } from 'fs';
-import path from 'path';
 
 const readDir = async () => {
-  const filePath = path.join(process.cwd(), 'src', 'app', 'api', 'graphql', 'location.txt');
-
-  const location = await fs.readFile(filePath, 'utf8');
+  const location = process.env.LOCATION!;
 
   const files = await fs.readdir(location.trim());
 
