@@ -57,7 +57,8 @@ jobs:
           echo "${{ secrets.LIGHTSAIL_KEY }}" > private_key.pem
           chmod 600 private_key.pem
           ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
-            tar -xzf build-artifacts.tar.gz
+            cd /home/ubuntu/Projects/portfolio
+            tar -xzf /home/ubuntu/Projects/portfolio/build-artifacts.tar.gz
             npm install --production
             npm run pm2:start
           EOF
