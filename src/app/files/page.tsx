@@ -3,10 +3,18 @@ import './styles.css';
 export const dynamic = 'force-dynamic'; // Disable static rendering
 
 export default async function FilesPage() {
-  const res = await fetch('http://localhost:3003/api/files', {
-    cache: 'no-store' // Ensures data is fetched on every request (SSR-like behavior)
+  const res = await fetch('http://localhost:3003/api/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ query: '{ files }' }),
+    cache: 'no-store'
   });
-  const data: string = await res.text();
+
+  const data = await res.json();
+
+  const list = data.data.files;
 
   return (
     <div>
@@ -17,7 +25,7 @@ export default async function FilesPage() {
       <h1>Files</h1>
       <div
         dangerouslySetInnerHTML={{
-          __html: data // Use the `__html` key to inject the raw HTML
+          __html: list // Use the `__html` key to inject the raw HTML
         }}
       />
     </div>

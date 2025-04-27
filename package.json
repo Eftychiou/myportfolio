@@ -7,7 +7,7 @@
     "build": "cross-env NODE_ENV=production next build",
     "start": "cross-env NODE_ENV=production next start -p 3003",
     "lint": "next lint",
-    "pm2:start": "cross-env NODE_ENV=production pm2 start npm --name Portfolio -- start"
+    "pm2:start": "cross-env NODE_ENV=production pm2 start npm --name Portfolio --time -- start"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -21,11 +21,16 @@
     "better-sqlite3": "^9.4.3",
     "cross-env": "^7.0.3",
     "echarts": "^5.4.3",
+    "graphql": "^16.10.0",
+    "graphql-yoga": "^5.13.4",
+    "install": "^0.13.0",
     "leva": "^0.9.35",
     "next": "14.0.4",
+    "npm": "^11.3.0",
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^2.10.3",
+    "sharp": "^0.34.1",
     "three": "^0.163.0",
     "three-stdlib": "^2.29.4"
   },
