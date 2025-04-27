@@ -49,7 +49,7 @@ jobs:
         run: |
           echo "${{ secrets.LIGHTSAIL_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} "mkdir -p /home/ubuntu/Projects/portfolio"
+          scp -i private_key.pem -o StrictHostKeyChecking=no build-artifacts.tar.gz ubuntu@${{ secrets.LIGHTSAIL_HOST }}:/home/ubuntu/Projects/portfolio
           rm -f private_key.pem  # Clean up the private key file after use
 
       - name: SSH into Lightsail and deploy
