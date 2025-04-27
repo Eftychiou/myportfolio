@@ -6,60 +6,57 @@ on:
       - master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # build:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
 
-      - name: Install dependencies
-        run: npm install
+  #     - name: Install dependencies
+  #       run: npm install
 
-      - name: Build project
-        run: npm run build
+  #     - name: Build project
+  #       run: npm run build
 
-      - name: Archive production build
-        run: |
-          tar -czf build-artifacts.tar.gz .next package.json public node_modules todos.db .env.production
+  #     - name: Archive production build
+  #       run: |
+  #         tar -czf build-artifacts.tar.gz .next package.json public node_modules todos.db .env.production
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: build-artifacts.tar.gz
+  #     - name: Upload build artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: build
+  #         path: build-artifacts.tar.gz
 
   deploy:
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: .
+      # - name: Download build artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: build
+      #     path: .
 
-      - name: Copy artifacts to Lightsail
-        run: |
-          echo "${{ secrets.LIGHTSAIL_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-          scp -i private_key.pem -o StrictHostKeyChecking=no build-artifacts.tar.gz ubuntu@${{ secrets.LIGHTSAIL_HOST }}:/home/ubuntu/Projects/portfolio
-          rm -f private_key.pem  # Clean up the private key file after use
+      # - name: Copy artifacts to Lightsail
+      #   run: |
+      #     echo "${{ secrets.LIGHTSAIL_KEY }}" > private_key.pem
+      #     chmod 600 private_key.pem
+      #     scp -i private_key.pem -o StrictHostKeyChecking=no build-artifacts.tar.gz ubuntu@${{ secrets.LIGHTSAIL_HOST }}:/home/ubuntu/Projects/portfolio
+      #     rm -f private_key.pem  # Clean up the private key file after use
 
       - name: SSH into Lightsail and deploy
         run: |
           echo "${{ secrets.LIGHTSAIL_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
-            cd /home/ubuntu/Projects/portfolio
-            tar -xzf /home/ubuntu/Projects/portfolio/build-artifacts.tar.gz
-            npm install --production
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'       
             npm run pm2:start
           EOF
           rm -f private_key.pem  # Clean up the private key file after use
