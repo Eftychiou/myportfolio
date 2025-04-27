@@ -26,7 +26,7 @@ jobs:
 
       - name: Archive production build
         run: |
-          tar -czf build-artifacts.tar.gz .next package.json public node_modules todos.db
+          tar -czf build-artifacts.tar.gz .next package.json public node_modules todos.db .env.production
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
