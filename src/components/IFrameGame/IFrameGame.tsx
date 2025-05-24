@@ -28,7 +28,7 @@ export const IFrameGame = () => {
       <iframe
         className={show ? classes.visible : classes.not_visible}
         // style={{ display: show ? 'block' : 'none' }}
-        src={process.env.IFRAME_URL}
+        src={process.env.NEXT_PUBLIC_IFRAME_URL}
         width={800}
         height={600}
       />
