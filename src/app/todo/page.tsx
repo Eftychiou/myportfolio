@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import classes from './page.module.scss';
+import classes from './_styles/page.module.scss';
 import { TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material'; // Import the delete icon
 

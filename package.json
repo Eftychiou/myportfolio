@@ -25,16 +25,20 @@
     "graphql-yoga": "^5.13.4",
     "install": "^0.13.0",
     "leva": "^0.9.35",
+    "lucide-react": "^0.522.0",
     "next": "14.0.4",
+    "nodemailer": "^7.0.3",
     "npm": "^11.3.0",
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^2.10.3",
     "three": "^0.163.0",
-    "three-stdlib": "^2.29.4"
+    "three-stdlib": "^2.29.4",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/three": "^0.163.0",

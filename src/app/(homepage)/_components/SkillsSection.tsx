@@ -1,11 +1,11 @@
 // features/homepage/components/SkillsSection.tsx
-import { SKILLS } from '@/app/(homepage)/constants';
-import classes from '@/app/(homepage)/home.module.scss';
+import { SKILLS } from '@/app/(homepage)/_consts/constants';
+import classes from '@/app/(homepage)/_styles/page.module.scss';
 import { PercentageChart } from './PercentageChart';
 import { WebChart } from './WebChart';
 import { useRef, useState } from 'react';
-import { useIntersectionObserver } from '../useIntersectionObserver';
-import { languagesList } from '@/app/(homepage)/data';
+import { useIntersectionObserver } from '../_hooks/useIntersectionObserver';
+import { languagesList } from '@/app/(homepage)/_consts/data';
 
 export const SkillsSection = () => {
   const [languageActiveLabel, setLanguageActiveLabel] = useState('');

@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import classes from '@/app/(homepage)/home.module.scss';
+import classes from '@/app/(homepage)/_styles/page.module.scss';
 import React from 'react';
-import { COLORS, data, languagesList, renderCustomizedLabel } from '@/app/(homepage)/data';
+import { COLORS, data, languagesList, renderCustomizedLabel } from '@/app/(homepage)/_consts/data';
 
 export const PercentageChart = React.memo((props: { setLanguages: any }) => {
   return (

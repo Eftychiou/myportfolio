@@ -6,7 +6,7 @@ import {
   PolarAngleAxis
   //   PolarRadiusAxis
 } from 'recharts';
-import classes from '@/app/(homepage)/home.module.scss';
+import classes from '@/app/(homepage)/_styles/page.module.scss';
 import React from 'react';
 
 export const WebChart = React.memo((props: { languages: any; setLanguageActiveLabel: any }) => {

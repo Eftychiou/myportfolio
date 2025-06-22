@@ -1,8 +1,8 @@
 'use client';
 
-import classes from './projects.module.scss';
+import classes from './_styles/projects.module.scss';
 import { Canvas } from '@react-three/fiber';
-import { Scene } from '../../components/Projects/Scene';
+import { Scene } from './_components/Scene';
 import { useEffect } from 'react';
 
 import * as THREE from 'three';

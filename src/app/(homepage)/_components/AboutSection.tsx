@@ -1,11 +1,11 @@
 // features/homepage/components/AboutSection.tsx
 import Image from 'next/image';
 import { downloadFile } from '@/lib';
-import classes from '@/app/(homepage)/home.module.scss';
-import { useIframeMessageListener } from '../useIframeMessageListener';
-import { useEyeMovement } from '../useEyeMovement';
+import classes from '@/app/(homepage)/_styles/page.module.scss';
+import { useIframeMessageListener } from '../_hooks/useIframeMessageListener';
+import { useEyeMovement } from '../_hooks/useEyeMovement';
 
-export const AboutSection = () => {
+const AboutSection = () => {
   const latestChatMsg = useIframeMessageListener();
   const { leftEyeRef, rightEyeRef } = useEyeMovement();
   return (
@@ -43,3 +43,5 @@ export const AboutSection = () => {
     </section>
   );
 };
+
+export default AboutSection;

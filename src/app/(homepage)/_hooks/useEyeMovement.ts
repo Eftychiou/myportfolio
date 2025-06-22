@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import classes from '../../../app/(homepage)/home.module.scss'; // Adjust path as needed
+import classes from '../../../app/(homepage)/_styles/page.module.scss'; // Adjust path as needed
 
 export function useEyeMovement() {
   const leftEyeRef = useRef<HTMLDivElement>(null);

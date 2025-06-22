@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import classes from './IFrameGame.module.scss';
 
 export const IFrameGame = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {

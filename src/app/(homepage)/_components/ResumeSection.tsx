@@ -1,15 +1,27 @@
 // features/homepage/components/ResumeSection.tsx
 import Image from 'next/image';
-import { JOBS } from '@/app/(homepage)/constants';
-import classes from '@/app/(homepage)/home.module.scss';
+import { JOBS } from '@/app/(homepage)/_consts/constants';
+import classes from '@/app/(homepage)/_styles/page.module.scss';
+import dynamic from 'next/dynamic';
+import { Spinner } from './Loader/SpinnerWithBackdrop';
+import { FC } from 'react';
+
+const ReactImage = dynamic<{}>(
+  () =>
+    new Promise<{ default: FC<{}> }>((r) => {
+      setTimeout(() => r(import('./ReactImage')), 3000);
+    }),
+  {
+    loading: () => <Spinner />,
+    ssr: false
+  }
+);
 
 export const ResumeSection = () => (
   <section id='resume' className={classes.resume}>
-    <div className={classes.title}>
-      Resume <div />
-    </div>
+    <div className={classes.title}>Resume</div>
     <div className={classes.image}>
-      <Image src='/images/react.png' alt='react' width={200} height={200} />
+      <ReactImage />
     </div>
     <div className={`${classes.image} ${classes.image2}`}>
       <Image src='/images/programming-languages.png' alt='languages' width={200} height={200} />
