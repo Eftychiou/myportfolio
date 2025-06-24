@@ -5,7 +5,7 @@ import classes from '@/app/(homepage)/_styles/page.module.scss';
 import dynamic from 'next/dynamic';
 import { Spinner } from './Loader/SpinnerWithBackdrop';
 import { FC } from 'react';
-
+// import TestComponent from './Test';
 const ReactImage = dynamic<{}>(
   () =>
     new Promise<{ default: FC<{}> }>((r) => {
@@ -17,9 +17,17 @@ const ReactImage = dynamic<{}>(
   }
 );
 
+// This is will remove it from the initial bundle
+const ResumeTitle = dynamic<{}>(() => import('./ResumeTitle'), {
+  loading: () => <Spinner />,
+  ssr: true
+});
+
 export const ResumeSection = () => (
   <section id='resume' className={classes.resume}>
-    <div className={classes.title}>Resume</div>
+    <div className={classes.title}>
+      <ResumeTitle />
+    </div>
     <div className={classes.image}>
       <ReactImage />
     </div>

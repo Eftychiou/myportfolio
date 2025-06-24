@@ -28,7 +28,7 @@ export default function TodoPage() {
   const [todoInput, setTodoInput] = useState('');
 
   const fetchTodos = () => {
-    fetch('/api/todos')
+    fetch('/api/todo')
       .then((res) => res.json())
       .then((res) => {
         setTodos(res);
