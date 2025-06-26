@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18.17.1
 
       - name: Install dependencies
         run: npm install
@@ -58,7 +58,7 @@ jobs:
           chmod 600 private_key.pem
           ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
             source ~/.nvm/nvm.sh
-            nvm use 18
+            nvm use 18.17.1
             cd /home/ubuntu/Projects/portfolio            
             tar -xzf /home/ubuntu/Projects/portfolio/build-artifacts.tar.gz
             npm install --production
