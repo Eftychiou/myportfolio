@@ -1,6 +1,6 @@
 'use client';
 
-import { TransitionStartFunction, useTransition } from 'react';
+import { TransitionStartFunction, useEffect, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { IconButton, List, ListItem, ListItemText } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
@@ -38,6 +38,14 @@ export function TodoList({
   startTransition: TransitionStartFunction;
 }) {
   const router = useRouter();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      router.refresh();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [router]);
 
   const handleDelete = async (id: number) => {
     deleteTodo(id);
