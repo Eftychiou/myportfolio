@@ -1,6 +1,8 @@
 import styles from './Loader.module.scss'; // or wherever you place it
 
-export const Spinner = () => <div className={styles.spinner} />;
+export const Spinner = ({ size = 50 }: { size?: number }) => (
+  <div className={styles.spinner} style={{ width: size, height: size }} />
+);
 
 export const SpinnerWithBackdrop = ({}) => {
   return (

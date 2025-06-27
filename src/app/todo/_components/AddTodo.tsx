@@ -1,13 +1,19 @@
 'use client';
 import { Button, TextField } from '@mui/material';
-import { useEffect, useState, useTransition } from 'react';
+import { TransitionStartFunction, useEffect, useState, useTransition } from 'react';
 import classes from '../_styles/page.module.scss';
 import { addTodo } from '../_actions/index';
 import { useFormState } from 'react-dom';
+import { Spinner } from '../../../shared/components/Loader/SpinnerWithBackdrop';
 
-export const AddTodo = () => {
+export const AddTodo = ({
+  isPending,
+  startTransition
+}: {
+  isPending: boolean;
+  startTransition: TransitionStartFunction;
+}) => {
   const [state, formAction] = useFormState(addTodo, { message: '' });
-  const [isPending, startTransition] = useTransition();
 
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
@@ -48,7 +54,7 @@ export const AddTodo = () => {
         helperText={error}
       />
       <Button type='submit' variant='contained' color='primary' fullWidth disabled={isPending}>
-        {isPending ? 'Adding...' : 'Adding Todo'}
+        {isPending ? <Spinner size={30} /> : 'Adding Todo'}
       </Button>
     </form>
   );

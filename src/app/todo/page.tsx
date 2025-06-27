@@ -1,6 +1,7 @@
 import classes from './_styles/page.module.scss';
 import { TodoList } from './_components/TodoList';
 import { AddTodo } from './_components/AddTodo';
+import { TodoClientWrapper } from './_components/TodoClientWrapper';
 
 export const dynamic = 'force-dynamic'; // Disable static rendering
 
@@ -12,8 +13,7 @@ export default async function TodoPage() {
 
   return (
     <div className={classes.ToDoPage}>
-      <TodoList todos={todos} />
-      <AddTodo />
+      <TodoClientWrapper todos={todos} />
     </div>
   );
 }

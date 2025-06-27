@@ -1,11 +1,10 @@
-// features/homepage/components/ResumeSection.tsx
 import Image from 'next/image';
 import { JOBS } from '@/app/(homepage)/_consts/constants';
 import classes from '@/app/(homepage)/_styles/page.module.scss';
 import dynamic from 'next/dynamic';
-import { Spinner } from './Loader/SpinnerWithBackdrop';
+import { Spinner } from '../../../shared/components/Loader/SpinnerWithBackdrop';
 import { FC } from 'react';
-// import TestComponent from './Test';
+
 const ReactImage = dynamic<{}>(
   () =>
     new Promise<{ default: FC<{}> }>((r) => {

@@ -1,15 +1,16 @@
 'use client';
 
-import { useTransition } from 'react';
+import { TransitionStartFunction, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { IconButton, List, ListItem, ListItemText } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
-import { deleteTodo } from '../_actions'; // adjust path as needed
+import { deleteTodo } from '../_actions';
+import classes from '../_styles/page.module.scss';
 
 type Todo = { id: number; text: string };
 
 const convertLinksToAnchors = (text: string) => {
-  const urlRegex = /(https?:\/\/[^\s]+)/g; // Regex to match URLs
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
   return text.split(urlRegex).map((part, index) =>
     urlRegex.test(part) ? (
       <a
@@ -27,12 +28,19 @@ const convertLinksToAnchors = (text: string) => {
   );
 };
 
-export function TodoList({ todos }: { todos: Todo[] }) {
+export function TodoList({
+  todos,
+  isPending,
+  startTransition
+}: {
+  todos: Todo[];
+  isPending: boolean;
+  startTransition: TransitionStartFunction;
+}) {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
 
   const handleDelete = async (id: number) => {
-    await deleteTodo(id);
+    deleteTodo(id);
     startTransition(() => {
       router.refresh(); // Refetch the server component
     });
@@ -41,14 +49,7 @@ export function TodoList({ todos }: { todos: Todo[] }) {
   return (
     <List>
       {todos.map((t) => (
-        <ListItem
-          key={t.id}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-        >
+        <ListItem key={t.id} className={classes.customListItem}>
           <ListItemText primary={convertLinksToAnchors(t.text)} />
           <IconButton onClick={() => handleDelete(t.id)} edge='end' aria-label='delete' disabled={isPending}>
             <DeleteIcon />
