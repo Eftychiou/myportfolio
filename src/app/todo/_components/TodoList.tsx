@@ -49,7 +49,7 @@ export function TodoList({
   return (
     <List>
       {todos.map((t) => (
-        <ListItem key={t.id} className={classes.customListItem}>
+        <ListItem key={t.id} className={classes.customListItem} sx={{ flex: '0 0 auto', width: 'fit-content' }}>
           <ListItemText primary={convertLinksToAnchors(t.text)} />
           <IconButton onClick={() => handleDelete(t.id)} edge='end' aria-label='delete' disabled={isPending}>
             <DeleteIcon />
