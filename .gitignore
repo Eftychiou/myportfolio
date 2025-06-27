@@ -6,7 +6,6 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-./todos.db
 # testing
 /coverage
 
@@ -35,3 +34,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+todos.db
