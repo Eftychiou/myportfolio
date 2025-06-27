@@ -18,9 +18,7 @@ export default function Homepage() {
     const ip = headersList.get('x-forwarded-for') || '8.8.8.8'; // fallback for testing
     getGeoData(ip).then((data) => {
       sendMessageToWhatsUp(
-        `You have visitor in the website with ip ${data?.ip || ''} from ${data?.country_name || ''}/${
-          data?.city || ''
-        } sending his greetings`
+        `You have visitor in the website with ip ${data?.ip || ''} from ${data?.country_name || ''}/${data?.city || ''}`
       );
     });
   }
