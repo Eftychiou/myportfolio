@@ -11,8 +11,8 @@ export function TodoClientWrapper({ todos }: { todos: Todo[] }) {
 
   return (
     <>
-      <TodoList todos={todos} isPending={isPending} startTransition={startTransition} />
       <AddTodo isPending={isPending} startTransition={startTransition} />
+      <TodoList todos={todos} isPending={isPending} startTransition={startTransition} />
     </>
   );
 }

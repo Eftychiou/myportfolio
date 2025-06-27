@@ -42,7 +42,7 @@ export function TodoList({
   useEffect(() => {
     const interval = setInterval(() => {
       router.refresh();
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [router]);
