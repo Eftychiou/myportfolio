@@ -33,14 +33,17 @@ export interface GeoIPData {
   org: string;
 }
 
-const getGeoData = async (ip: string): Promise<GeoIPData> => await (await fetch(`https://ipapi.co/${ip}/json/`)).json();
+export const getGeoData = async (ip: string): Promise<GeoIPData> =>
+  await (await fetch(`https://ipapi.co/${ip}/json/`)).json();
 
 export async function sayHello() {
   const headersList = headers();
   const ip = headersList.get('x-forwarded-for') || '8.8.8.8'; // fallback for testing
   const data = await getGeoData(ip);
   sendMessageToWhatsUp(
-    `Someone with ip ${data?.ip || ''} from ${data?.country_name || ''}/${data?.city || ''} sending his greetings`
+    `Someone clicked and said hello with ip ${data?.ip || ''} from ${data?.country_name || ''}/${
+      data?.city || ''
+    } sending his greetings`
   );
 
   return 'Greetings was send to George';

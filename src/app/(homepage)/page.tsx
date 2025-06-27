@@ -7,12 +7,21 @@ import AboutSection from './_components/AboutSection';
 import { sendMessageToWhatsUp } from '../../../lib';
 import classes from './_styles/page.module.scss';
 import { Poke } from './_components/Poke';
+import { headers } from 'next/headers';
+import { getGeoData } from './_actions/poke';
 
 export const dynamic = 'force-dynamic'; // THIS MAKES IT RUN ON EVERY REQUEST
 
-export default function Homepage() {
+export default async function Homepage() {
   if (process.env.NODE_ENV === 'production') {
-    sendMessageToWhatsUp('You have visitor in the website');
+    const headersList = headers();
+    const ip = headersList.get('x-forwarded-for') || '8.8.8.8'; // fallback for testing
+    const data = await getGeoData(ip);
+    sendMessageToWhatsUp(
+      `You have visitor in the website with ip ${data?.ip || ''} from ${data?.country_name || ''}/${
+        data?.city || ''
+      } sending his greetings`
+    );
   }
 
   return (
