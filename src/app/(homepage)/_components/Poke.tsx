@@ -4,23 +4,36 @@
 import { useTransition, useState } from 'react';
 import { sayHello } from '@/app/(homepage)/_actions/poke';
 
-export const Poke = () => {
+export const Poke = ({ ip }: { ip: string }) => {
   const [message, setMessage] = useState('');
   const [isPending, startTransition] = useTransition();
 
   const handleClick = () => {
     startTransition(async () => {
-      const result = await sayHello('Giorgos');
+      const result = await sayHello(ip);
       setMessage(result);
+      setTimeout(() => setMessage(''), 5000);
     });
   };
 
   return (
-    <div style={{ position: 'absolute', right: 0, top: 0 }}>
+    <div
+      style={{
+        position: 'fixed',
+        right: 0,
+        bottom: 0,
+        zIndex: 999999,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8
+      }}
+    >
+      {message && <p style={{ color: 'white', fontWeight: 600 }}>{message}</p>}
       <button
         onClick={handleClick}
         disabled={isPending}
         style={{
+          marginLeft: 'auto',
           padding: '0.75rem 1.5rem',
           fontSize: '1rem',
           backgroundColor: isPending ? '#a0c4ff' : '#0070f3',
@@ -35,8 +48,6 @@ export const Poke = () => {
       >
         {isPending ? 'Saying hello...' : 'Say Hello'}
       </button>
-
-      {message && <p>{message}</p>}
     </div>
   );
 };

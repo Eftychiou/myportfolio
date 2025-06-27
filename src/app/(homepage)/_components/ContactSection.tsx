@@ -2,13 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CONTACT_LINKS } from '@/app/(homepage)/_consts/constants';
 import classes from '@/app/(homepage)/_styles/page.module.scss';
-import { EmailForm } from './EmailForm/EmailForm';
-import { Poke } from './Poke';
 
 export const ContactSection = () => {
   return (
     <section id='contact' className={classes.contact}>
-      <Poke />
       <div className={classes.links}>
         {CONTACT_LINKS.map((link, index) => (
           <div className={classes.link} key={index}>
@@ -18,7 +15,6 @@ export const ContactSection = () => {
           </div>
         ))}
       </div>
-      <EmailForm />
     </section>
   );
 };

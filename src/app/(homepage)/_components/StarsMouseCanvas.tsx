@@ -1,3 +1,4 @@
+'use client';
 import { useCanvasSetup } from '../_hooks/useCanvasSetup';
 
 export const StarsMouseCanvas = () => {

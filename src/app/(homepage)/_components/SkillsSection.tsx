@@ -1,3 +1,4 @@
+'use client';
 // features/homepage/components/SkillsSection.tsx
 import { SKILLS } from '@/app/(homepage)/_consts/constants';
 import classes from '@/app/(homepage)/_styles/page.module.scss';

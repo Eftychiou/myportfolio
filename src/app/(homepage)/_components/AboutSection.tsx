@@ -1,3 +1,4 @@
+'use client';
 // features/homepage/components/AboutSection.tsx
 import Image from 'next/image';
 import { downloadFile } from '@/lib';
