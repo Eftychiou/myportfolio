@@ -38,18 +38,9 @@ export async function sayHello() {
   const headersList = headers();
   const ip = headersList.get('x-forwarded-for') || '8.8.8.8'; // fallback for testing
   const data = await getGeoData(ip);
-  const phoneNumber = process.env.NEXT_PUBLIC_CALLMEBOT_PHONE_NUMBER;
-  const apiKey = process.env.NEXT_PUBLIC_CALLMEBOT_API_KEY;
-  const message = encodeURIComponent(
+  sendMessageToWhatsUp(
     `Someone with ip ${data?.ip || ''} from ${data?.country_name || ''}/${data?.city || ''} sending his greetings`
   );
 
-  const url = `https://api.callmebot.com/whatsapp.php?phone=${phoneNumber}&text=${message}&apikey=${apiKey}`;
-
-  fetch(url)
-    .then((res) => {
-      return res.text();
-    })
-    .catch((err) => console.log(err));
   return 'Greetings was send to George';
 }

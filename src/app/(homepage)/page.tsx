@@ -9,6 +9,10 @@ import AboutSection from './_components/AboutSection';
 import { Poke } from './_components/Poke';
 
 export default function Homepage() {
+  if (process.env.NODE_ENV === 'production') {
+    sendMessageToWhatsUp('You have visitor in the website');
+  }
+
   return (
     <div className={classes.page}>
       <StarsMouseCanvas />
