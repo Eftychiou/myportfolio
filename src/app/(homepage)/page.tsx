@@ -17,7 +17,7 @@ export default function Homepage() {
       <ResumeSection />
       <SkillsSection />
       <ContactSection />
-      <Poke ip={'test'} />
+      <Poke />
     </div>
   );
 }

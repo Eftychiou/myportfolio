@@ -34,7 +34,7 @@ export interface GeoIPData {
 
 const getGeoData = async (ip: string): Promise<GeoIPData> => await (await fetch(`https://ipapi.co/${ip}/json/`)).json();
 
-export async function sayHello(ipa: string) {
+export async function sayHello() {
   const headersList = headers();
   const ip = headersList.get('x-forwarded-for') || '8.8.8.8'; // fallback for testing
   const data = await getGeoData(ip);

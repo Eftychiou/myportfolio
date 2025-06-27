@@ -4,13 +4,13 @@
 import { useTransition, useState } from 'react';
 import { sayHello } from '@/app/(homepage)/_actions/poke';
 
-export const Poke = ({ ip }: { ip: string }) => {
+export const Poke = () => {
   const [message, setMessage] = useState('');
   const [isPending, startTransition] = useTransition();
 
   const handleClick = () => {
     startTransition(async () => {
-      const result = await sayHello(ip);
+      const result = await sayHello();
       setMessage(result);
       setTimeout(() => setMessage(''), 5000);
     });
