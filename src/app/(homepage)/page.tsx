@@ -8,6 +8,8 @@ import { sendMessageToWhatsUp } from '../../../lib';
 import classes from './_styles/page.module.scss';
 import { Poke } from './_components/Poke';
 
+export const dynamic = 'force-dynamic'; // THIS MAKES IT RUN ON EVERY REQUEST
+
 export default function Homepage() {
   if (process.env.NODE_ENV === 'production') {
     sendMessageToWhatsUp('You have visitor in the website');
