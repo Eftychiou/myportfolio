@@ -26,7 +26,11 @@ jobs:
 
       - name: Archive production build
         run: |
-          tar -czf build-artifacts.tar.gz .next package.json public node_modules todos.db .env.production
+          EXTRA_FILE=""
+          if [ -f todos.db ]; then
+            EXTRA_FILE="todos.db"
+          fi
+          tar -czf build-artifacts.tar.gz .next package.json public node_modules .env.production $EXTRA_FILE
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
