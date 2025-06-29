@@ -36,7 +36,7 @@ const AboutSection = () => {
             Having worked extensively with frontend applications coupled with my professional certifications I have
             gained exposure and established various technical skills relating to web developing. A proactive, self
             motivated individual, with strong learning enthusiasm. I relish the opportunity to work as part of a team,
-            enjoying the challenge of taking on new roles and responsibilities in dynamic working environments
+            enjoying the challenge of taking on new roles and responsibilities in dynamic working environments...
           </p>
         </div>
         <div className={classes.footer_title}>Since 2019</div>
