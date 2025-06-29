@@ -7,7 +7,7 @@ import { Group, Object3DEventMap, PerspectiveCamera as PerspectiveCameraType, Ma
 export const Car = forwardRef<Mesh>((props, ref) => {
   const carRef: React.Ref<Group<Object3DEventMap>> = useRef(null);
 
-  const { nodes, materials, animations }: any = useGLTF('./model/car.gltf');
+  const { nodes, materials, animations }: any = useGLTF('/model/car.gltf');
   const { actions } = useAnimations(animations, carRef);
 
   useEffect(() => {
@@ -291,4 +291,4 @@ export const Car = forwardRef<Mesh>((props, ref) => {
   );
 });
 
-useGLTF.preload('./model/car.gltf');
+useGLTF.preload('/model/car.gltf');

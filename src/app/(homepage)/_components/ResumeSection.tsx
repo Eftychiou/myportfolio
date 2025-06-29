@@ -5,16 +5,20 @@ import dynamic from 'next/dynamic';
 import { Spinner } from '../../../shared/components/Loader/SpinnerWithBackdrop';
 import { FC } from 'react';
 
-const ReactImage = dynamic<{}>(
-  () =>
-    new Promise<{ default: FC<{}> }>((r) => {
-      setTimeout(() => r(import('./ReactImage')), 3000);
-    }),
-  {
-    loading: () => <Spinner />,
-    ssr: false
-  }
-);
+// const ReactImage = dynamic<{}>(
+//   () =>
+//     new Promise<{ default: FC<{}> }>((r) => {
+//       setTimeout(() => r(import('./ReactImage')), 3000);
+//     }),
+//   {
+//     loading: () => <Spinner />,
+//     ssr: false
+//   }
+// );
+const ReactImage = dynamic<{}>(() => new Promise<{ default: FC<{}> }>((r) => r(import('./ReactImage'))), {
+  loading: () => <Spinner />,
+  ssr: false
+});
 
 // This is will remove it from the initial bundle
 const ResumeTitle = dynamic<{}>(() => import('./ResumeTitle'), {

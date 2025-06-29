@@ -16,9 +16,9 @@ export const Scene = () => {
   function Plane(props: PlaneProps) {
     const [ref] = usePlane(() => ({ material: 'ground', type: 'Static', ...props }), useRef<Group>(null));
 
-    const diff = useLoader(THREE.TextureLoader, './forest/forrest_ground_01_diff_4k.jpg');
-    const disp = useLoader(THREE.TextureLoader, './forest/forrest_ground_01_disp_4k.png');
-    const rough = useLoader(THREE.TextureLoader, './forest/forrest_ground_01_rough_4k.jpg');
+    const diff = useLoader(THREE.TextureLoader, '/forest/forrest_ground_01_diff_4k.jpg');
+    const disp = useLoader(THREE.TextureLoader, '/forest/forrest_ground_01_disp_4k.png');
+    const rough = useLoader(THREE.TextureLoader, '/forest/forrest_ground_01_rough_4k.jpg');
 
     const terrainSize = 5;
     const terrainLength = 10;
@@ -110,7 +110,7 @@ export const Scene = () => {
         </Text>
         <Text3D
           ref={cyposTextRef}
-          font='./fonts/2.json'
+          font='/fonts/2.json'
           height={0.1}
           size={2}
           letterSpacing={0.1}
@@ -220,9 +220,9 @@ export const Scene = () => {
         <Wall />
         <Plane rotation={[-Math.PI / 2, 0, 0]} userData={{ id: 'floor' }} />
         <Vehicle position={[0, 2, 30]} rotation={[0, -Math.PI / 0.93, 0]} angularVelocity={[0, 0.6, 0]} />
-        {/* <Ramp /> */}
+        <Ramp />
         <Text3D
-          font='./fonts/2.json'
+          font='/fonts/2.json'
           height={0.1}
           size={4}
           letterSpacing={0.1}
@@ -249,21 +249,21 @@ export const Scene = () => {
         </Text>
         <WebsiteStop
           position={[-15, 0.01, -10]}
-          imageSrc='./images/cypos_image.png'
+          imageSrc='/images/cypos_image.png'
           userData={{ id: 'cypos' }}
           link='https://www.cypossystems.com.cy/'
           label='Cypos'
         />
         <WebsiteStop
           position={[20, 0.01, -10]}
-          imageSrc='./images/eshop_image.png'
+          imageSrc='/images/eshop_image.png'
           userData={{ id: 'eshop' }}
           link='https://eshop.geef.cc/'
           label='Eshop'
         />
         <WebsiteStop
           position={[35, 0.01, -10]}
-          imageSrc='./images/take.png'
+          imageSrc='/images/take.png'
           userData={{ id: 'eshop' }}
           link='https://take.geef.cc/'
           label='Take'

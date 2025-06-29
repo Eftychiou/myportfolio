@@ -2,8 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
 export async function deleteTodo(id: number): Promise<void> {
-  const res = await fetch(`http://localhost:3003/api/todo/${id}`, {
+  const res = await fetch(`${baseUrl}/api/todo/${id}`, {
     method: 'DELETE'
   });
 
@@ -15,7 +17,7 @@ export async function deleteTodo(id: number): Promise<void> {
 export async function addTodo(prevState: any, formData: FormData) {
   const todo = formData.get('todo') as string;
 
-  const res = await fetch('http://localhost:3003/api/todo', {
+  const res = await fetch(`${baseUrl}/api/todo`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

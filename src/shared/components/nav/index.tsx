@@ -14,6 +14,11 @@ export const Nav = () => {
       name: 'Projects',
       href: '/projects',
       iconUrl: '/images/application.png'
+    },
+    {
+      name: 'Admin',
+      href: '/admin',
+      iconUrl: '/images/application.png'
     }
   ];
 

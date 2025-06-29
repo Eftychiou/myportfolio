@@ -4,7 +4,7 @@ import { TransitionStartFunction, useEffect, useState, useTransition } from 'rea
 import classes from '../_styles/page.module.scss';
 import { addTodo } from '../_actions/index';
 import { useFormState } from 'react-dom';
-import { Spinner } from '../../../shared/components/Loader/SpinnerWithBackdrop';
+import { Spinner } from '../../../../../shared/components/Loader/SpinnerWithBackdrop';
 
 export const AddTodo = ({
   isPending,
