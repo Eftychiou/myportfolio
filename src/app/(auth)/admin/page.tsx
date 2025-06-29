@@ -14,14 +14,21 @@ export default async function AdminPage() {
       </div>
     );
   }
-
+  console.log('session.user.image', session.user?.image);
   return (
     <div style={styles.pageContainer}>
       <div style={styles.header}>
         <h1 style={styles.title}>Admin Dashboard</h1>
         <p style={styles.subtitle}>Welcome, {session.user?.name}</p>
         {session.user?.image && (
-          <Image src={session.user.image} alt='User profile' width={100} height={100} style={styles.profileImage} />
+          <Image
+            src={session.user.image}
+            alt='User profile'
+            width={100}
+            height={100}
+            style={styles.profileImage}
+            unoptimized
+          />
         )}
         <div style={{ marginTop: 20 }}>
           <SignOutButton />
