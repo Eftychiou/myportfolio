@@ -2,8 +2,22 @@
 const nextConfig = {
   reactStrictMode: false,
   transpilePackages: ['three'],
-  webpack: function (config, options) {
-    config.experiments = { asyncWebAssembly: true, syncWebAssembly: true, layers: true };
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com'
+      }
+    ]
+  },
+
+  webpack(config) {
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+      syncWebAssembly: true,
+      layers: true
+    };
     return config;
   }
 };
