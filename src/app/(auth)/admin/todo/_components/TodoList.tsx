@@ -49,9 +49,9 @@ export function TodoList({
 
   const handleDelete = async (id: number) => {
     await deleteTodo(id);
-    // startTransition(() => {
-    //   router.refresh(); // Refetch the server component
-    // });
+    startTransition(() => {
+      router.refresh(); // Refetch the server component
+    });
   };
 
   return (
