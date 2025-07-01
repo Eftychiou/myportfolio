@@ -42,12 +42,12 @@ export function TodoList({
   useEffect(() => {
     const interval = setInterval(() => {
       router.refresh();
-    }, 10000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [router]);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = (id: number) => {
     deleteTodo(id);
     startTransition(() => {
       router.refresh(); // Refetch the server component
