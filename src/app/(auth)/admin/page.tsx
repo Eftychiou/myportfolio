@@ -14,7 +14,7 @@ export default async function AdminPage() {
       </div>
     );
   }
-  console.log('session.user.image', session.user?.image);
+
   return (
     <div style={styles.pageContainer}>
       <div style={styles.header}>

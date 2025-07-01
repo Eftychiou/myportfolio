@@ -39,13 +39,13 @@ export function TodoList({
 }) {
   const router = useRouter();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      router.refresh();
-    }, 10000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     router.refresh();
+  //   }, 10000);
 
-    return () => clearInterval(interval);
-  }, [router]);
+  //   return () => clearInterval(interval);
+  // }, [router]);
 
   const handleDelete = async (id: number) => {
     deleteTodo(id);
