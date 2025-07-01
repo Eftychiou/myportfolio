@@ -6,8 +6,12 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 export async function deleteTodo(id: number): Promise<void> {
   console.log('id', id);
+  console.log(`${baseUrl}/api/todo/${id}`);
   const res = await fetch(`${baseUrl}/api/todo/${id}`, {
     method: 'DELETE'
+  }).then((res) => {
+    console.log('res', res);
+    return res;
   });
 
   if (!res.ok) {
