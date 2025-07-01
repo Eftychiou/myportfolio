@@ -1,7 +1,6 @@
 'use client';
 
-import { Loader } from '@/shared/components/Loader/Loader';
-import { SpinnerWithBackdrop } from '@/shared/components/Loader/SpinnerWithBackdrop';
+import { Spinner } from '@/shared/components/Loader/SpinnerWithBackdrop';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 
@@ -26,9 +25,14 @@ export default function LoginPage() {
             signIn('google', { callbackUrl: '/admin', redirect: true });
           }}
         >
-          <span style={styles.googleIcon}>🔵</span> Sign in with Google
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <span style={styles.googleIcon}>🔵</span> Sign in with Google
+            </>
+          )}
         </button>
-        {loading && <SpinnerWithBackdrop />}
       </div>
     </div>
   );

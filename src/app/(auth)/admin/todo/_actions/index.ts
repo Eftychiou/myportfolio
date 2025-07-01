@@ -20,6 +20,7 @@ export async function addTodo(prevState: any, formData: FormData) {
 
   const res = await fetch(`${baseUrl}/api/todo`, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json'
     },
