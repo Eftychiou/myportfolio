@@ -4,6 +4,7 @@ import { NextResponse, NextRequest } from 'next/server';
 export const dynamic = 'force-dynamic'; // Disable static rendering
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  console.log('params', params);
   const id = params.id;
 
   if (!id) {
