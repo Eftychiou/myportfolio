@@ -9,12 +9,10 @@ export async function deleteTodo(id: number): Promise<void> {
   console.log(`${baseUrl}/api/todo/${id}`);
   const res = await fetch(`${baseUrl}/api/todo/${id}`, {
     method: 'DELETE'
-  }).then((res) => {
-    console.log('res', res);
-    return res;
   });
-
+  console.log('ok', res.ok, res.body);
   if (!res.ok) {
+    console.log('Not okay');
     throw new Error(`Failed to delete todo with id ${id}`);
   }
 }
