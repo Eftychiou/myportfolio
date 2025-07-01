@@ -48,7 +48,7 @@ export function TodoList({
   // }, [router]);
 
   const handleDelete = async (id: number) => {
-    deleteTodo(id).catch((err) => console.log(err));
+    await deleteTodo(id);
     // startTransition(() => {
     //   router.refresh(); // Refetch the server component
     // });
