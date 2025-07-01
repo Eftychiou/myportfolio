@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 export async function deleteTodo(id: number): Promise<void> {
+  console.log('id', id);
   const res = await fetch(`${baseUrl}/api/todo/${id}`, {
     method: 'DELETE'
   });
