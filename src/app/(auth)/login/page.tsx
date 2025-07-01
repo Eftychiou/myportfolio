@@ -1,10 +1,13 @@
 'use client';
 
+import { Loader } from '@/shared/components/Loader/Loader';
+import { SpinnerWithBackdrop } from '@/shared/components/Loader/SpinnerWithBackdrop';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 
 export default function LoginPage() {
   const [hovered, setHovered] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <div style={styles.page}>
@@ -18,10 +21,14 @@ export default function LoginPage() {
           }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          onClick={() => signIn('google', { callbackUrl: '/admin', redirect: true })}
+          onClick={() => {
+            setLoading(true);
+            signIn('google', { callbackUrl: '/admin', redirect: true });
+          }}
         >
           <span style={styles.googleIcon}>🔵</span> Sign in with Google
         </button>
+        {loading && <SpinnerWithBackdrop />}
       </div>
     </div>
   );

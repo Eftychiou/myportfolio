@@ -8,7 +8,7 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-          // prompt: 'select_account',
+          prompt: 'select_account',
           redirect_uri: process.env.OAUTH_REDIRECT_URI
         }
       }
