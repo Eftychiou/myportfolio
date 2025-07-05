@@ -37,29 +37,29 @@ export default async function AdminPage() {
 
       <h2 style={styles.sectionTitle}>Admin Links</h2>
       <div style={styles.linkGrid}>
-        <Link href='/admin/todo' style={styles.card}>
+        <Link prefetch={false} href='/admin/todo' style={styles.card}>
           <Image src='/images/cypos.png' alt='Todo' width={200} height={200} unoptimized style={styles.cardImage} />
           <p style={styles.cardLabel}>Todo</p>
         </Link>
 
-        <Link href='/admin/files' style={styles.card}>
+        <Link prefetch={false} href='/admin/files' style={styles.card}>
           <Image src='/images/cypos.png' alt='Files' width={200} height={200} unoptimized style={styles.cardImage} />
           <p style={styles.cardLabel}>Files</p>
         </Link>
 
-        <Link href='/admin/projects' style={styles.card}>
+        <Link prefetch={false} href='/admin/projects' style={styles.card}>
           <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
           <p style={styles.cardLabel}>Projects</p>
         </Link>
-        <Link href='https://geef.cc/cypos/visits' style={styles.card}>
+        <Link prefetch={false} href='https://geef.cc/cypos/visits' style={styles.card}>
           <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
           <p style={styles.cardLabel}>Cypos visits</p>
         </Link>
-        <Link href='https://geef.cc/cypos/licenses?password=geef' style={styles.card}>
+        <Link prefetch={false} href='https://geef.cc/cypos/licenses?password=geef' style={styles.card}>
           <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
           <p style={styles.cardLabel}>Cypos Licenses</p>
         </Link>
-        <Link href='https://geef.cc/cypos/visitors?message=hello' style={styles.card}>
+        <Link prefetch={false} href='https://geef.cc/cypos/visitors?message=hello' style={styles.card}>
           <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
           <p style={styles.cardLabel}>Cypos send Message</p>
         </Link>
