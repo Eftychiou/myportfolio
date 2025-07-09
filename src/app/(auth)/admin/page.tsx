@@ -3,6 +3,7 @@ import { authOptions } from '../../api/auth/[...nextauth]/_consts';
 import Image from 'next/image';
 import Link from 'next/link';
 import SignOutButton from '../_components/SignOutButton';
+import AdminLinkGrid from '../_components/AdminLinkGrid';
 
 export default async function AdminPage() {
   const session = await getServerSession(authOptions);
@@ -36,34 +37,7 @@ export default async function AdminPage() {
       </div>
 
       <h2 style={styles.sectionTitle}>Admin Links</h2>
-      <div style={styles.linkGrid}>
-        <Link prefetch={false} href='/admin/todo' style={styles.card}>
-          <Image src='/images/cypos.png' alt='Todo' width={200} height={200} unoptimized style={styles.cardImage} />
-          <p style={styles.cardLabel}>Todo</p>
-        </Link>
-
-        <Link prefetch={false} href='/admin/files' style={styles.card}>
-          <Image src='/images/cypos.png' alt='Files' width={200} height={200} unoptimized style={styles.cardImage} />
-          <p style={styles.cardLabel}>Files</p>
-        </Link>
-
-        <Link prefetch={false} href='/admin/projects' style={styles.card}>
-          <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
-          <p style={styles.cardLabel}>Projects</p>
-        </Link>
-        <Link prefetch={false} href='https://geef.cc/cypos/visits' style={styles.card}>
-          <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
-          <p style={styles.cardLabel}>Cypos visits</p>
-        </Link>
-        <Link prefetch={false} href='https://geef.cc/cypos/licenses?password=geef' style={styles.card}>
-          <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
-          <p style={styles.cardLabel}>Cypos Licenses</p>
-        </Link>
-        <Link prefetch={false} href='https://geef.cc/cypos/visitors?message=hello' style={styles.card}>
-          <Image src='/images/cypos.png' alt='Projects' width={200} height={200} unoptimized style={styles.cardImage} />
-          <p style={styles.cardLabel}>Cypos send Message</p>
-        </Link>
-      </div>
+      <AdminLinkGrid />
     </div>
   );
 }
