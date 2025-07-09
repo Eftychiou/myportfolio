@@ -182,6 +182,7 @@ $bubble-border: 0 -1 * $px $white, 0 -2 * $px $black, $px 0 $white, $px -1 * $px
         .image {
           position: relative;
           right: 100px;
+          z-index: 2;
           .cloud {
             cursor: pointer;
             right: -130px;

@@ -5,10 +5,32 @@ import { downloadFile } from '@/lib';
 import classes from '@/app/(homepage)/_styles/page.module.scss';
 import { useIframeMessageListener } from '../_hooks/useIframeMessageListener';
 import { useEyeMovement } from '../_hooks/useEyeMovement';
+import { useRef } from 'react';
+import { redirect, useRouter } from 'next/navigation';
 
 const AboutSection = () => {
   const latestChatMsg = useIframeMessageListener();
   const { leftEyeRef, rightEyeRef } = useEyeMovement();
+  const clickTimesRef = useRef<number[]>([]);
+  const router = useRouter();
+
+  const handleImageClick = () => {
+    const now = Date.now();
+    const times = clickTimesRef.current;
+
+    times.push(now);
+
+    if (times.length > 3) times.shift();
+
+    if (times.length === 3) {
+      if (times[2] - times[0] <= 1000) {
+        // 500ms between each → 1000ms total between first and last
+
+        clickTimesRef.current = []; // reset
+        router.push('/admin');
+      }
+    }
+  };
   return (
     <section id='about_me' className={classes.about_me}>
       <p className={classes.latest_chat_msg}>{latestChatMsg}</p>
@@ -21,7 +43,7 @@ const AboutSection = () => {
         </div>
         <div className={classes.description}>
           <div className={classes.image}>
-            <Image src='/images/aboutme.png' alt='aboutme' width={100} height={100} />
+            <Image src='/images/aboutme.png' alt='aboutme' width={100} height={100} onClick={handleImageClick} />
             <div id='lid' className={classes.eye}>
               <div ref={leftEyeRef}></div>
             </div>
