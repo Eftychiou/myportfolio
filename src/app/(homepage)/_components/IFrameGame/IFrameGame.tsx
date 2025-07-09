@@ -29,7 +29,7 @@ export const IFrameGame = () => {
       <iframe
         className={show ? classes.visible : classes.not_visible}
         // style={{ display: show ? 'block' : 'none' }}
-        src={iframeUrl}
+        src='https://iframe.geef.cc/game'
         width={800}
         height={600}
       />
