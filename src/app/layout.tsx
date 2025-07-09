@@ -5,6 +5,7 @@ import '../styles/globals.css';
 import Script from 'next/script';
 import { Analytics } from '@/shared/components/Analytics';
 import SessionProvider from '../shared/components/SessionProvider';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Nav />
           </header>
           <main>{children}</main>
-          <Analytics />
+          <Suspense fallback={null}>
+            <Analytics />
+          </Suspense>
         </SessionProvider>
       </body>
     </html>
