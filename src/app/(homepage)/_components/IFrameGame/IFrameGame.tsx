@@ -20,13 +20,14 @@ export const IFrameGame = () => {
   // }, []);
 
   return (
-    <div className={classes.IFrameGame} style={{ display: isMobile ? 'none' : 'block' }}>
+    // style={{ display: isMobile ? 'none' : 'block' }}
+    <div className={classes.IFrameGame}>
       <div className={classes.toggle} onClick={() => setShow((state) => !state)}>
         CHAT
       </div>
 
       <iframe
-        className={show ? classes.visible : classes.not_visible}
+        // className={show ? classes.visible : classes.not_visible}
         // style={{ display: show ? 'block' : 'none' }}
         src={process.env.NEXT_PUBLIC_IFRAME_URL}
         width={800}
