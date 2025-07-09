@@ -3,21 +3,21 @@ import { useEffect, useState } from 'react';
 import classes from './IFrameGame.module.scss';
 
 export const IFrameGame = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 900px)');
+  // useEffect(() => {
+  //   const mediaQuery = window.matchMedia('(max-width: 900px)');
 
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches);
-    };
+  //   const handleChange = (e: MediaQueryListEvent) => {
+  //     setIsMobile(e.matches);
+  //   };
 
-    handleChange(mediaQuery as unknown as MediaQueryListEvent);
+  //   handleChange(mediaQuery as unknown as MediaQueryListEvent);
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
+  //   mediaQuery.addEventListener('change', handleChange);
+  //   return () => mediaQuery.removeEventListener('change', handleChange);
+  // }, []);
 
   return (
     <div className={classes.IFrameGame} style={{ display: isMobile ? 'none' : 'block' }}>
