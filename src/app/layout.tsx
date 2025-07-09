@@ -5,7 +5,6 @@ import '../styles/globals.css';
 import Script from 'next/script';
 import { Analytics } from '@/shared/components/Analytics';
 import SessionProvider from '../shared/components/SessionProvider';
-import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name='theme-color' content='#7D5F6E' />
       </head>
-      {/* <Script
+      <Script
         strategy='afterInteractive'
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_KEY}`}
       />
@@ -28,16 +27,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               page_path: window.location.pathname,
             });
           `}
-      </Script> */}
+      </Script>
       <body className={[inter.className, classes.body].join(' ')}>
         <SessionProvider>
           <header>
             <Nav />
           </header>
           <main>{children}</main>
-          {/* <Suspense fallback={null}>
-            <Analytics />
-          </Suspense> */}
+          <Analytics />
         </SessionProvider>
       </body>
     </html>

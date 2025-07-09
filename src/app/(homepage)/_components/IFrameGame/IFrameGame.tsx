@@ -5,6 +5,7 @@ import classes from './IFrameGame.module.scss';
 export const IFrameGame = () => {
   const [show, setShow] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
+  const [iframeUrl] = useState<string>(process.env.NEXT_PUBLIC_IFRAME_URL!);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 900px)');
@@ -28,7 +29,7 @@ export const IFrameGame = () => {
       <iframe
         className={show ? classes.visible : classes.not_visible}
         // style={{ display: show ? 'block' : 'none' }}
-        src={process.env.NEXT_PUBLIC_IFRAME_URL}
+        src={iframeUrl}
         width={800}
         height={600}
       />
