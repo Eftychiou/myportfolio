@@ -9,6 +9,7 @@ export default function AdminLinkGrid() {
   const [loadingHref, setLoadingHref] = useState<string | null>(null);
 
   const [colorMap, setColorMap] = useState<Record<string, string>>({});
+  const [customMessage, setCustomMessage] = useState<string>('');
 
   useEffect(() => {
     const allLinks = [...internalLinks, ...externalLinks];
@@ -41,13 +42,44 @@ export default function AdminLinkGrid() {
           </div>
         ))}
 
-        {externalLinks.map((link) => (
-          <a key={link.href} href={link.href} className='card'>
-            <div className='fakeImage' style={{ backgroundColor: colorMap[link.href] || '#e0e0e0' }}>
-              {link.label}
-            </div>
-          </a>
-        ))}
+        {externalLinks.map((link) => {
+          if (link.label === 'Cypos send Message') {
+            const params = new URLSearchParams();
+
+            if (customMessage.trim()) {
+              params.set('message', customMessage);
+            }
+
+            const customHref = params.toString()
+              ? `https://geef.cc/cypos/visitors?${params.toString()}`
+              : 'https://geef.cc/cypos/visitors';
+
+            return (
+              <div key={link.label} className='card'>
+                <a href={customHref} className='no-underline'>
+                  <div className='fakeImage' style={{ backgroundColor: colorMap[link.href] || '#e0e0e0' }}>
+                    {link.label}
+                  </div>
+                </a>
+                <input
+                  type='text'
+                  value={customMessage}
+                  onChange={(e) => setCustomMessage(e.target.value)}
+                  className='inputBox'
+                  placeholder='Enter message'
+                />
+              </div>
+            );
+          }
+
+          return (
+            <a key={link.href} href={link.href} className='card'>
+              <div className='fakeImage' style={{ backgroundColor: colorMap[link.href] || '#e0e0e0' }}>
+                {link.label}
+              </div>
+            </a>
+          );
+        })}
       </div>
 
       <style jsx>{`
@@ -59,6 +91,7 @@ export default function AdminLinkGrid() {
         }
 
         .card {
+          position: relative;
           display: inline-block;
           width: 220px;
           text-align: center;
@@ -70,6 +103,7 @@ export default function AdminLinkGrid() {
           transition: transform 0.2s, box-shadow 0.2s;
           cursor: pointer;
           padding: 10px;
+          overflow: hidden;
         }
 
         .card:hover {
@@ -100,6 +134,24 @@ export default function AdminLinkGrid() {
           display: flex;
           justify-content: center;
           align-items: center;
+        }
+
+        .inputBox {
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          right: 10px;
+          padding: 6px 8px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+          background-color: #fff;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-underline {
+          text-decoration: none;
+          color: inherit;
         }
       `}</style>
     </>
