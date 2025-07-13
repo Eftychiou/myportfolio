@@ -9,7 +9,10 @@ const readDir = async () => {
   const htmlContent = /*html*/ `
         <ul>
           ${files
-            .map((file) => `<li><a href="https://geef.cc/static/${file}" target="_blank">${file}</a></li>`)
+            .map(
+              (file) =>
+                `<li><a href="${process.env.NEXT_PUBLIC_SITE_URL}/static/${file}" target="_blank">${file}</a></li>`
+            )
             .join('')}
         </ul>
       `;
