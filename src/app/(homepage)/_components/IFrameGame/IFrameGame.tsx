@@ -29,8 +29,8 @@ export const IFrameGame = () => {
         className={show ? classes.visible : classes.not_visible}
         // style={{ display: show ? 'block' : 'none' }}
         src={process.env.NEXT_PUBLIC_IFRAME_URL}
-        width={800}
-        height={600}
+        width={process.env.NEXT_PUBLIC_IFRAME_WIDTH}
+        height={process.env.NEXT_PUBLIC_IFRAME_HEIGHT}
       />
     </div>
   );
