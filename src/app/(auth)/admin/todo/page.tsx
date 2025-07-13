@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 type Todo = { id: number; text: string };
-const fetchTodos = (): Promise<Array<Todo>> => fetch(`${baseUrl}/api/todo`).then((res) => res.json());
+const fetchTodos = (): Promise<Array<Todo>> =>
+  fetch(`${baseUrl}/api/todo`, { cache: 'no-store' }).then((res) => res.json());
 
 export default async function TodoPage() {
   let todos = await fetchTodos();
